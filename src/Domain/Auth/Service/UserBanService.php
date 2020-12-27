@@ -8,16 +8,16 @@ use Psr\EventDispatcher\EventDispatcherInterface;
 
 class UserBanService
 {
-  private EventDispatcherInterface $dispatcher;
+    private EventDispatcherInterface $dispatcher;
 
-  public function __construct(EventDispatcherInterface $dispatcher)
-  {
-    $this->dispatcher = $dispatcher;
-  }
+    public function __construct(EventDispatcherInterface $dispatcher)
+    {
+        $this->dispatcher = $dispatcher;
+    }
 
-  public function ban(User $user): void
-  {
-    $user->setBannedAt(new \DateTime());
-    $this->dispatcher->dispatch(new UserBannedEvent($user));
-  }
+    public function ban(User $user): void
+    {
+        $user->setBannedAt(new \DateTime());
+        $this->dispatcher->dispatch(new UserBannedEvent($user));
+    }
 }

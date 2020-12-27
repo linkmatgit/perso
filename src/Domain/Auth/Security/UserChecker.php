@@ -15,37 +15,37 @@ use Symfony\Component\Security\Core\User\UserInterface;
  */
 class UserChecker implements UserCheckerInterface
 {
-  private LoginAttemptService $loginAttemptService;
+    private LoginAttemptService $loginAttemptService;
 
-  public function __construct(LoginAttemptService $loginAttemptService)
-  {
-    $this->loginAttemptService = $loginAttemptService;
-  }
+    public function __construct(LoginAttemptService $loginAttemptService)
+    {
+        $this->loginAttemptService = $loginAttemptService;
+    }
 
   /**
    * Vérifie que l'utilisateur a le droit de se connecter.
    */
-  public function checkPreAuth(UserInterface $user): void
-  {
-    if ($user instanceof User && $this->loginAttemptService->limitReachedFor($user)) {
-      throw new TooManyBadCredentialsException();
-    }
+    public function checkPreAuth(UserInterface $user): void
+    {
+        if ($user instanceof User && $this->loginAttemptService->limitReachedFor($user)) {
+            throw new TooManyBadCredentialsException();
+        }
 
-    return;
-  }
+        return;
+    }
 
   /**
    * Vérifie que l'utilisateur connecté a le droit de continuer.
    */
-  public function checkPostAuth(UserInterface $user): void
-  {
-    if ($user instanceof User && $user->isBanned()) {
-      throw new UserBannedException();
-    }
-    if ($user instanceof User && null !== $user->getConfirmationToken()) {
-      throw new UserNotFoundException();
-    }
+    public function checkPostAuth(UserInterface $user): void
+    {
+        if ($user instanceof User && $user->isBanned()) {
+            throw new UserBannedException();
+        }
+        if ($user instanceof User && null !== $user->getConfirmationToken()) {
+            throw new UserNotFoundException();
+        }
 
-    return;
-  }
+        return;
+    }
 }

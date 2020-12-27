@@ -15,70 +15,70 @@ use Doctrine\ORM\QueryBuilder;
  */
 class IterableQueryBuilder extends QueryBuilder implements \IteratorAggregate, \ArrayAccess
 {
-  private bool $firstResultFetched = false;
+    private bool $firstResultFetched = false;
 
   /** @var E|null */
-  private ?object $firstResult = null;
+    private ?object $firstResult = null;
 
   /** @var E[]|null */
-  private ?array $results = null;
+    private ?array $results = null;
 
   /**
    * This will extract the first result from the query (without collecting the other elements).
    *
    * @return E|null
    */
-  public function getFirstResultOnly(): ?object
-  {
-    if (false === $this->firstResultFetched) {
-      $this->firstResultFetched = true;
-      $this->firstResult = $this->getQuery()->setMaxResults(1)->getOneOrNullResult();
-    }
+    public function getFirstResultOnly(): ?object
+    {
+        if (false === $this->firstResultFetched) {
+            $this->firstResultFetched = true;
+            $this->firstResult = $this->getQuery()->setMaxResults(1)->getOneOrNullResult();
+        }
 
-    return $this->firstResult;
-  }
+        return $this->firstResult;
+    }
 
   /**
    * @return \ArrayIterator<E>
    */
-  public function getIterator(): \ArrayAccess
-  {
-    if (null === $this->results) {
-      $this->results = $this->getQuery()->getResult();
-    }
+    public function getIterator(): \ArrayAccess
+    {
+        if (null === $this->results) {
+            $this->results = $this->getQuery()->getResult();
+        }
 
-    return new \ArrayIterator($this->results);
-  }
+        return new \ArrayIterator($this->results);
+    }
 
   /**
    * @param string $offset
    */
-  public function offsetExists($offset): bool
-  {
-    return array_key_exists($offset, $this->getResults());
-  }
+    public function offsetExists($offset): bool
+    {
+        return array_key_exists($offset, $this->getResults());
+    }
 
   /**
    * @return E[]
    */
-  public function getResults(): array
-  {
-    if (null === $this->results) {
-      $this->results = $this->getQuery()->getResult();
-    }
+    public function getResults(): array
+    {
+        if (null === $this->results) {
+            $this->results = $this->getQuery()->getResult();
+        }
 
-    return $this->results;
-  }
+        return $this->results;
+    }
 
   /**
    * @param string $offset
    *
    * @return mixed
    */
-  public function offsetGet($offset)
-  {
-    return $this->getResults()[$offset];
-  }
+    public function offsetGet($offset)
+    {
+        return $this->getResults()[$offset];
+    }
 
   /**
    * @param string $offset
@@ -86,18 +86,18 @@ class IterableQueryBuilder extends QueryBuilder implements \IteratorAggregate, \
    *
    * @return void
    */
-  public function offsetSet($offset, $value)
-  {
-    $this->getResults()[$offset] = $value;
-  }
+    public function offsetSet($offset, $value)
+    {
+        $this->getResults()[$offset] = $value;
+    }
 
   /**
    * @param string $offset
    *
    * @return void
    */
-  public function offsetUnset($offset)
-  {
-    unset($this->getResults()[$offset]);
-  }
+    public function offsetUnset($offset)
+    {
+        unset($this->getResults()[$offset]);
+    }
 }

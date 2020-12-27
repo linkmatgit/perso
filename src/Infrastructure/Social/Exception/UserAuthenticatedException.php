@@ -11,22 +11,22 @@ use Symfony\Component\Security\Core\Exception\AuthenticationException;
  */
 class UserAuthenticatedException extends AuthenticationException
 {
-  private User $user;
-  private ResourceOwnerInterface $resourceOwner;
+    private User $user;
+    private ResourceOwnerInterface $resourceOwner;
 
-  public function __construct(User $user, ResourceOwnerInterface $resourceOwner)
-  {
-    $this->user = $user;
-    $this->resourceOwner = $resourceOwner;
-  }
+    public function __construct(User $user, ResourceOwnerInterface $resourceOwner)
+    {
+        $this->user = $user;
+        $this->resourceOwner = $resourceOwner;
+    }
 
-  public function getUser(): User
-  {
-    return $this->user;
-  }
+    public function getUser(): User
+    {
+        return $this->user;
+    }
 
-  public function getResourceOwner(): ResourceOwnerInterface
-  {
-    return $this->resourceOwner;
-  }
+    public function getResourceOwner(): ResourceOwnerInterface
+    {
+        return $this->resourceOwner;
+    }
 }

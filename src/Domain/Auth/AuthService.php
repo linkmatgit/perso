@@ -13,50 +13,49 @@ use Symfony\Component\Security\Http\Event\LogoutEvent;
  */
 class AuthService
 {
-  private TokenStorageInterface $tokenStorage;
-  private EventDispatcherInterface $eventDispatcher;
+    private TokenStorageInterface $tokenStorage;
+    private EventDispatcherInterface $eventDispatcher;
 
-  public function __construct(
-    TokenStorageInterface $tokenStorage,
-    EventDispatcherInterface $eventDispatcher
-  )
-  {
-    $this->tokenStorage = $tokenStorage;
-    $this->eventDispatcher = $eventDispatcher;
-  }
-
-  public function getUser(): User
-  {
-    $user = $this->getUserOrNull();
-    if (null === $user) {
-      throw new AccessDeniedException();
+    public function __construct(
+        TokenStorageInterface $tokenStorage,
+        EventDispatcherInterface $eventDispatcher
+    ) {
+        $this->tokenStorage = $tokenStorage;
+        $this->eventDispatcher = $eventDispatcher;
     }
 
-    return $user;
-  }
+    public function getUser(): User
+    {
+        $user = $this->getUserOrNull();
+        if (null === $user) {
+            throw new AccessDeniedException();
+        }
 
-  public function getUserOrNull(): ?User
-  {
-    if (!$token = $this->tokenStorage->getToken()) {
-      return null;
+        return $user;
     }
 
-    $user = $token->getUser();
-    if (!\is_object($user)) {
-      return null;
+    public function getUserOrNull(): ?User
+    {
+        if (!$token = $this->tokenStorage->getToken()) {
+            return null;
+        }
+
+        $user = $token->getUser();
+        if (!\is_object($user)) {
+            return null;
+        }
+
+        if (!$user instanceof User) {
+            return null;
+        }
+
+        return $user;
     }
 
-    if (!$user instanceof User) {
-      return null;
+    public function logout(?Request $request = null): void
+    {
+        $request = $request ?: new Request();
+        $this->eventDispatcher->dispatch(new LogoutEvent($request, $this->tokenStorage->getToken()));
+        $this->tokenStorage->setToken(null);
     }
-
-    return $user;
-  }
-
-  public function logout(?Request $request = null): void
-  {
-    $request = $request ?: new Request();
-    $this->eventDispatcher->dispatch(new LogoutEvent($request, $this->tokenStorage->getToken()));
-    $this->tokenStorage->setToken(null);
-  }
 }

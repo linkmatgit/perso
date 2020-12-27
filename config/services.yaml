@@ -22,10 +22,18 @@ services:
   App\Http\Controller\:
     resource: '../src/Http/Controller/'
     tags: [ 'controller.service_arguments' ]
+
   App\Http\Admin\Controller\:
     resource: '../src/Http/Admin/Controller'
     tags: [ 'controller.service_arguments' ]
+
   App\Core\Twig\TwigAssetExtension:
     arguments:
       $assetPath: '%kernel.project_dir%/public/assets'
       $env: '%kernel.environment%'
+
+  App\Http\Admin\Firewall\AdminRequestListener:
+    arguments: ['%admin_prefix%']
+
+  App\Core\Helper\Paginator\PaginatorInterface:
+    class: App\Core\Helper\Paginator\KnpPaginator

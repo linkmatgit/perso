@@ -12,10 +12,10 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 
 class ChangePasswordFormType extends AbstractType
 {
-  public function buildForm(FormBuilderInterface $builder, array $options): void
-  {
-    $builder
-      ->add('plainPassword', RepeatedType::class, [
+    public function buildForm(FormBuilderInterface $builder, array $options): void
+    {
+        $builder
+        ->add('plainPassword', RepeatedType::class, [
         'type' => PasswordType::class,
         'first_options' => [
           'constraints' => [
@@ -38,11 +38,11 @@ class ChangePasswordFormType extends AbstractType
         // Instead of being set onto the object directly,
         // this is read and encoded in the controller
         'mapped' => false,
-      ]);
-  }
+        ]);
+    }
 
-  public function configureOptions(OptionsResolver $resolver): void
-  {
-    $resolver->setDefaults([]);
-  }
+    public function configureOptions(OptionsResolver $resolver): void
+    {
+        $resolver->setDefaults([]);
+    }
 }

@@ -10,17 +10,17 @@ final class PasswordResetRequestData
    * @Assert\Email()
    * @Assert\NotBlank()
    */
-  public string $email = '';
+    public string $email = '';
 
-  public function getEmail(): string
-  {
-    return $this->email;
-  }
+    public function getEmail(): string
+    {
+        return $this->email;
+    }
 
-  public function setEmail(string $email): PasswordResetRequestData
-  {
-    $this->email = $email;
+    public function setEmail(string $email): PasswordResetRequestData
+    {
+        $this->email = $email;
 
-    return $this;
-  }
+        return $this;
+    }
 }

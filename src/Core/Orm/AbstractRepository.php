@@ -20,10 +20,10 @@ abstract class AbstractRepository extends ServiceEntityRepository
    * @param class-string<E> $entityClass
    * @psalm-param class-string<E> $entityClass
    */
-  public function __construct(ManagerRegistry $registry, string $entityClass)
-  {
-    parent::__construct($registry, $entityClass);
-  }
+    public function __construct(ManagerRegistry $registry, string $entityClass)
+    {
+        parent::__construct($registry, $entityClass);
+    }
 
   /**
    * Trouve une entité par sa clef primaire et renvoie une exception en cas d'absence.
@@ -32,15 +32,15 @@ abstract class AbstractRepository extends ServiceEntityRepository
    *
    * @return E
    */
-  public function findOrFail($id): object
-  {
-    $entity = $this->find($id, null, null);
-    if (null === $entity) {
-      throw EntityNotFoundException::fromClassNameAndIdentifier($this->_entityName, [(string)$id]);
-    }
+    public function findOrFail($id): object
+    {
+        $entity = $this->find($id, null, null);
+        if (null === $entity) {
+            throw EntityNotFoundException::fromClassNameAndIdentifier($this->_entityName, [(string)$id]);
+        }
 
-    return $entity;
-  }
+        return $entity;
+    }
 
   /**
    * Crée une requête qui peut être iterable, mais qui ne récupère les données que lors de la première itération.
@@ -49,11 +49,11 @@ abstract class AbstractRepository extends ServiceEntityRepository
    *
    * @return IterableQueryBuilder<E>
    */
-  public function createIterableQuery(string $alias, $indexBy = null): IterableQueryBuilder
-  {
-    /** @var IterableQueryBuilder<E> $queryBuilder */
-    $queryBuilder = new IterableQueryBuilder($this->_em);
+    public function createIterableQuery(string $alias, $indexBy = null): IterableQueryBuilder
+    {
+      /** @var IterableQueryBuilder<E> $queryBuilder */
+        $queryBuilder = new IterableQueryBuilder($this->_em);
 
-    return $queryBuilder->select($alias)->from($this->_entityName, $alias, $indexBy);
-  }
+        return $queryBuilder->select($alias)->from($this->_entityName, $alias, $indexBy);
+    }
 }

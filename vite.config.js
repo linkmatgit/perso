@@ -2,7 +2,7 @@
 const prefresh = require("@prefresh/vite");
 const path = require("path");
 
-const root = "./assets";
+const root = "./ressources/assets";
 
 /**
  * @type { import('vite').UserConfig }
@@ -18,7 +18,7 @@ const config = {
   plugins: [prefresh()],
   root,
   configureServer: function ({root, watcher}) {
-    watcher.add(path.resolve(root, "../templates/**/*.twig"));
+    watcher.add(path.resolve(root, "../ressources/templates/**/*.twig"));
     watcher.on("change", function (path) {
       if (path.endsWith(".twig")) {
         watcher.send({

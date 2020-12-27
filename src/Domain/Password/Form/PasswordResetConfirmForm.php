@@ -15,24 +15,24 @@ class PasswordResetConfirmForm extends AbstractType
    * @param FormBuilderInterface<FormBuilderInterface> $builder
    * @param array<string,mixed> $options
    */
-  public function buildForm(FormBuilderInterface $builder, array $options): void
-  {
-    $builder
-      ->add('password', RepeatedType::class, [
+    public function buildForm(FormBuilderInterface $builder, array $options): void
+    {
+        $builder
+        ->add('password', RepeatedType::class, [
         'type' => PasswordType::class,
         'required' => true,
-      ]);
-  }
+        ]);
+    }
 
-  public function configureOptions(OptionsResolver $resolver): void
-  {
-    $resolver->setDefaults([
-      'data_class' => PasswordResetConfirmData::class,
-    ]);
-  }
+    public function configureOptions(OptionsResolver $resolver): void
+    {
+        $resolver->setDefaults([
+        'data_class' => PasswordResetConfirmData::class,
+        ]);
+    }
 
-  public function getBlockPrefix(): string
-  {
-    return '';
-  }
+    public function getBlockPrefix(): string
+    {
+        return '';
+    }
 }

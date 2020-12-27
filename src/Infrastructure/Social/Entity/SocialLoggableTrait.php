@@ -9,73 +9,73 @@ trait SocialLoggableTrait
   /**
    * @ORM\Column(type="string", nullable=true)
    */
-  private ?string $discordId = null;
+    private ?string $discordId = null;
 
   /**
    * @ORM\Column(type="string", nullable=true)
    */
-  private ?string $githubId = null;
+    private ?string $githubId = null;
 
   /**
    * @ORM\Column(type="string", nullable=true)
    */
-  private ?string $googleId = null;
+    private ?string $googleId = null;
 
   /**
    * @ORM\Column(type="string", nullable=true)
    */
-  private ?string $facebookId = null;
+    private ?string $facebookId = null;
 
-  public function getDiscordId(): ?string
-  {
-    return $this->discordId;
-  }
+    public function getDiscordId(): ?string
+    {
+        return $this->discordId;
+    }
 
-  public function setDiscordId(?string $discordId): self
-  {
-    $this->discordId = $discordId;
+    public function setDiscordId(?string $discordId): self
+    {
+        $this->discordId = $discordId;
 
-    return $this;
-  }
+        return $this;
+    }
 
-  public function getGithubId(): ?string
-  {
-    return $this->githubId;
-  }
+    public function getGithubId(): ?string
+    {
+        return $this->githubId;
+    }
 
-  public function setGithubId(?string $githubId): self
-  {
-    $this->githubId = $githubId;
+    public function setGithubId(?string $githubId): self
+    {
+        $this->githubId = $githubId;
 
-    return $this;
-  }
+        return $this;
+    }
 
-  public function getGoogleId(): ?string
-  {
-    return $this->googleId;
-  }
+    public function getGoogleId(): ?string
+    {
+        return $this->googleId;
+    }
 
-  public function setGoogleId(?string $googleId): self
-  {
-    $this->googleId = $googleId;
+    public function setGoogleId(?string $googleId): self
+    {
+        $this->googleId = $googleId;
 
-    return $this;
-  }
+        return $this;
+    }
 
-  public function getFacebookId(): ?string
-  {
-    return $this->facebookId;
-  }
+    public function getFacebookId(): ?string
+    {
+        return $this->facebookId;
+    }
 
-  public function setFacebookId(?string $facebookId): self
-  {
-    $this->facebookId = $facebookId;
+    public function setFacebookId(?string $facebookId): self
+    {
+        $this->facebookId = $facebookId;
 
-    return $this;
-  }
+        return $this;
+    }
 
-  public function useOauth(): bool
-  {
-    return null !== $this->googleId || null !== $this->facebookId || null !== $this->githubId;
-  }
+    public function useOauth(): bool
+    {
+        return null !== $this->googleId || null !== $this->facebookId || null !== $this->githubId;
+    }
 }

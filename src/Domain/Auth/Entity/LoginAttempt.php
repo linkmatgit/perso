@@ -15,50 +15,50 @@ class LoginAttempt
    * @ORM\GeneratedValue(strategy="IDENTITY")
    * @ORM\Column(type="integer")
    */
-  private int $id;
+    private int $id;
 
   /**
    * @ORM\ManyToOne(targetEntity="App\Domain\Auth\User")
    * @ORM\JoinColumn(onDelete="CASCADE")
    */
-  private User $user;
+    private User $user;
 
   /**
    * @ORM\Column(type="datetime")
    */
-  private \DateTime $createdAt;
+    private \DateTime $createdAt;
 
-  public function __construct()
-  {
-    $this->createdAt = new \DateTime();
-  }
+    public function __construct()
+    {
+        $this->createdAt = new \DateTime();
+    }
 
-  public function getId(): int
-  {
-    return $this->id;
-  }
+    public function getId(): int
+    {
+        return $this->id;
+    }
 
-  public function getUser(): User
-  {
-    return $this->user;
-  }
+    public function getUser(): User
+    {
+        return $this->user;
+    }
 
-  public function setUser(User $user): self
-  {
-    $this->user = $user;
+    public function setUser(User $user): self
+    {
+        $this->user = $user;
 
-    return $this;
-  }
+        return $this;
+    }
 
-  public function getCreatedAt(): \DateTime
-  {
-    return $this->createdAt;
-  }
+    public function getCreatedAt(): \DateTime
+    {
+        return $this->createdAt;
+    }
 
-  public function setCreatedAt(\DateTime $createdAt): self
-  {
-    $this->createdAt = $createdAt;
+    public function setCreatedAt(\DateTime $createdAt): self
+    {
+        $this->createdAt = $createdAt;
 
-    return $this;
-  }
+        return $this;
+    }
 }

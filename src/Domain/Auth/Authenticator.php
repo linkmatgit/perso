@@ -26,127 +26,126 @@ use Symfony\Component\Security\Http\Util\TargetPathTrait;
 
 class Authenticator extends AbstractFormLoginAuthenticator implements PasswordAuthenticatedInterface
 {
-  use TargetPathTrait;
+    use TargetPathTrait;
 
-  private UrlGeneratorInterface $urlGenerator;
-  private CsrfTokenManagerInterface $csrfTokenManager;
-  private UserPasswordEncoderInterface $passwordEncoder;
-  private ?UserInterface $user = null;
-  private EventDispatcherInterface $eventDispatcher;
-  private UserRepository $userRepository;
-  private UrlMatcherInterface $urlMatcher;
+    private UrlGeneratorInterface $urlGenerator;
+    private CsrfTokenManagerInterface $csrfTokenManager;
+    private UserPasswordEncoderInterface $passwordEncoder;
+    private ?UserInterface $user = null;
+    private EventDispatcherInterface $eventDispatcher;
+    private UserRepository $userRepository;
+    private UrlMatcherInterface $urlMatcher;
 
-  public function __construct(
-    UserRepository $userRepository,
-    UrlGeneratorInterface $urlGenerator,
-    CsrfTokenManagerInterface $csrfTokenManager,
-    UserPasswordEncoderInterface $passwordEncoder,
-    EventDispatcherInterface $eventDispatcher,
-    UrlMatcherInterface $urlMatcher
-  )
-  {
-    $this->urlGenerator = $urlGenerator;
-    $this->csrfTokenManager = $csrfTokenManager;
-    $this->passwordEncoder = $passwordEncoder;
-    $this->eventDispatcher = $eventDispatcher;
-    $this->userRepository = $userRepository;
-    $this->urlMatcher = $urlMatcher;
-  }
-
-  public function supports(Request $request)
-  {
-    return 'auth_login' === $request->attributes->get('_route')
-      && $request->isMethod('POST');
-  }
-
-  public function getCredentials(Request $request)
-  {
-    $credentials = [
-      'username' => $request->request->get('username'),
-      'password' => $request->request->get('password'),
-      'csrf_token' => $request->request->get('_csrf_token'),
-    ];
-    $request->getSession()->set(
-      Security::LAST_USERNAME,
-      $credentials['username']
-    );
-
-    return $credentials;
-  }
-
-  public function getUser($credentials, UserProviderInterface $userProvider)
-  {
-    $token = new CsrfToken('authenticate', $credentials['csrf_token']);
-    if (!$this->csrfTokenManager->isTokenValid($token)) {
-      throw new InvalidCsrfTokenException();
-    }
-
-    $user = $this->userRepository->findForAuth($credentials['username']);
-
-    if (!$user) {
-      throw new BadCredentialsException();
-    }
-
-    return $user;
-  }
-
-  public function checkCredentials($credentials, UserInterface $user): bool
-  {
-    $this->user = $user;
-
-    return $this->passwordEncoder->isPasswordValid($user, $credentials['password']);
-  }
-
-  public function getPassword($credentials): ?string
-  {
-    return $credentials['password'];
-  }
-
-  public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $providerKey): RedirectResponse
-  {
-    if ($redirect = $request->get('redirect')) {
-      try {
-        $this->urlMatcher->match($redirect);
-
-        return new RedirectResponse($redirect);
-      } catch (\Exception $e) {
-        // Do nothing
-      }
-    }
-    if ($targetPath = $this->getTargetPath($request->getSession(), $providerKey)) {
-      return new RedirectResponse($targetPath);
-    }
-
-    return new RedirectResponse($this->urlGenerator->generate('home'));
-  }
-
-  public function onAuthenticationFailure(Request $request, AuthenticationException $exception): RedirectResponse
-  {
-    if ($this->user instanceof User &&
-      $exception instanceof BadCredentialsException
+    public function __construct(
+        UserRepository $userRepository,
+        UrlGeneratorInterface $urlGenerator,
+        CsrfTokenManagerInterface $csrfTokenManager,
+        UserPasswordEncoderInterface $passwordEncoder,
+        EventDispatcherInterface $eventDispatcher,
+        UrlMatcherInterface $urlMatcher
     ) {
-      $this->eventDispatcher->dispatch(new BadPasswordLoginEvent($this->user));
+        $this->urlGenerator = $urlGenerator;
+        $this->csrfTokenManager = $csrfTokenManager;
+        $this->passwordEncoder = $passwordEncoder;
+        $this->eventDispatcher = $eventDispatcher;
+        $this->userRepository = $userRepository;
+        $this->urlMatcher = $urlMatcher;
     }
 
-    return parent::onAuthenticationFailure($request, $exception);
-  }
+    public function supports(Request $request)
+    {
+        return 'auth_login' === $request->attributes->get('_route')
+        && $request->isMethod('POST');
+    }
+
+    public function getCredentials(Request $request)
+    {
+        $credentials = [
+        'username' => $request->request->get('username'),
+        'password' => $request->request->get('password'),
+        'csrf_token' => $request->request->get('_csrf_token'),
+        ];
+        $request->getSession()->set(
+            Security::LAST_USERNAME,
+            $credentials['username']
+        );
+
+        return $credentials;
+    }
+
+    public function getUser($credentials, UserProviderInterface $userProvider)
+    {
+        $token = new CsrfToken('authenticate', $credentials['csrf_token']);
+        if (!$this->csrfTokenManager->isTokenValid($token)) {
+            throw new InvalidCsrfTokenException();
+        }
+
+        $user = $this->userRepository->findForAuth($credentials['username']);
+
+        if (!$user) {
+            throw new BadCredentialsException();
+        }
+
+        return $user;
+    }
+
+    public function checkCredentials($credentials, UserInterface $user): bool
+    {
+        $this->user = $user;
+
+        return $this->passwordEncoder->isPasswordValid($user, $credentials['password']);
+    }
+
+    public function getPassword($credentials): ?string
+    {
+        return $credentials['password'];
+    }
+
+    public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $providerKey): RedirectResponse
+    {
+        if ($redirect = $request->get('redirect')) {
+            try {
+                $this->urlMatcher->match($redirect);
+
+                return new RedirectResponse($redirect);
+            } catch (\Exception $e) {
+              // Do nothing
+            }
+        }
+        if ($targetPath = $this->getTargetPath($request->getSession(), $providerKey)) {
+            return new RedirectResponse($targetPath);
+        }
+
+        return new RedirectResponse($this->urlGenerator->generate('home'));
+    }
+
+    public function onAuthenticationFailure(Request $request, AuthenticationException $exception): RedirectResponse
+    {
+        if ($this->user instanceof User &&
+        $exception instanceof BadCredentialsException
+        ) {
+            $this->eventDispatcher->dispatch(new BadPasswordLoginEvent($this->user));
+        }
+
+        return parent::onAuthenticationFailure($request, $exception);
+    }
 
   /**
    * @return RedirectResponse|JsonResponse
    */
-  public function start(Request $request, AuthenticationException $authException = null): Response
-  {
-    $url = $this->getLoginUrl();
+    public function start(Request $request, AuthenticationException $authException = null): Response
+    {
+        $url = $this->getLoginUrl();
 
-    if ('json' === $request->getContentType()) {
-      return new JsonResponse([], Response::HTTP_FORBIDDEN);
+        if ('json' === $request->getContentType()) {
+            return new JsonResponse([], Response::HTTP_FORBIDDEN);
+        }
+
+        return new RedirectResponse($url);
     }
 
-    return new RedirectResponse($url);
-  }
-
-  protected function getLoginUrl()
-  {
-    return $this->urlGenerator->generate('auth_login');
-  }
+    protected function getLoginUrl()
+    {
+        return $this->urlGenerator->generate('auth_login');
+    }
 }

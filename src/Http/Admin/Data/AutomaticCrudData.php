@@ -17,53 +17,53 @@ use Symfony\Component\PropertyAccess\PropertyAccessor;
  */
 abstract class AutomaticCrudData implements CrudDataInterface
 {
-  protected object $entity;
+    protected object $entity;
 
-  public function __construct(object $entity)
-  {
-    $this->entity = $entity;
-    $reflexion = new ReflectionClass($this);
-    $properties = $reflexion->getProperties(ReflectionProperty::IS_PUBLIC);
-    $accessor = new PropertyAccessor();
-    foreach ($properties as $property) {
-      $name = $property->getName();
-      /** @var \ReflectionNamedType|null $type */
-      $type = $property->getType();
-      if ($type &&
-        UploadedFile::class === $type->getName()) {
-        continue;
-      }
-      $accessor->setValue($this, $name, $accessor->getValue($entity, $name));
+    public function __construct(object $entity)
+    {
+        $this->entity = $entity;
+        $reflexion = new ReflectionClass($this);
+        $properties = $reflexion->getProperties(ReflectionProperty::IS_PUBLIC);
+        $accessor = new PropertyAccessor();
+        foreach ($properties as $property) {
+            $name = $property->getName();
+          /** @var \ReflectionNamedType|null $type */
+            $type = $property->getType();
+            if ($type &&
+            UploadedFile::class === $type->getName()) {
+                continue;
+            }
+            $accessor->setValue($this, $name, $accessor->getValue($entity, $name));
+        }
     }
-  }
 
-  public function getEntity(): object
-  {
-    return $this->entity;
-  }
-
-  public function hydrate(): void
-  {
-    $reflexion = new ReflectionClass($this);
-    $properties = $reflexion->getProperties(ReflectionProperty::IS_PUBLIC);
-    $accessor = new PropertyAccessor();
-    foreach ($properties as $property) {
-      $name = $property->getName();
-      $value = $accessor->getValue($this, $name);
-      $accessor->setValue($this->entity, $name, $value);
+    public function getEntity(): object
+    {
+        return $this->entity;
     }
-  }
 
-  public function getFormClass(): string
-  {
-    return AutomaticForm::class;
-  }
-
-  public function getId(): ?int
-  {
-    if (method_exists($this->entity, 'getId')) {
-      return $this->entity->getId();
+    public function hydrate(): void
+    {
+        $reflexion = new ReflectionClass($this);
+        $properties = $reflexion->getProperties(ReflectionProperty::IS_PUBLIC);
+        $accessor = new PropertyAccessor();
+        foreach ($properties as $property) {
+            $name = $property->getName();
+            $value = $accessor->getValue($this, $name);
+            $accessor->setValue($this->entity, $name, $value);
+        }
     }
-    throw new \RuntimeException("L'entité doit avoir une méthode getId()");
-  }
+
+    public function getFormClass(): string
+    {
+        return AutomaticForm::class;
+    }
+
+    public function getId(): ?int
+    {
+        if (method_exists($this->entity, 'getId')) {
+            return $this->entity->getId();
+        }
+        throw new \RuntimeException("L'entité doit avoir une méthode getId()");
+    }
 }

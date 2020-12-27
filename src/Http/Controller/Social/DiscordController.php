@@ -18,30 +18,30 @@ class DiscordController extends AbstractController
    * @Route("/discord/connect", name="oauth_discord")
    * @IsGranted("ROLE_USER")
    */
-  public function connect(DiscordClient $client): RedirectResponse
-  {
-    return $client->redirect(['identify', 'email']);
-  }
+    public function connect(DiscordClient $client): RedirectResponse
+    {
+        return $client->redirect(['identify', 'email']);
+    }
 
   /**
    * @Route("/discord/check", name="oauth_discord_check")
    * @IsGranted("ROLE_USER")
    */
-  public function check(DiscordClient $client, EntityManagerInterface $em): RedirectResponse
-  {
-    try {
-      /** @var DiscordResourceOwner $client */
-      $discordUser = $client->fetchUser();
-      /** @var User $user */
-      $user = $this->getUser();
+    public function check(DiscordClient $client, EntityManagerInterface $em): RedirectResponse
+    {
+        try {
+          /** @var DiscordResourceOwner $client */
+            $discordUser = $client->fetchUser();
+          /** @var User $user */
+            $user = $this->getUser();
 
-      $user->setDiscordId($discordUser->getId());
-      $em->flush();
-      $this->addFlash('success', 'Votre compte discord a bien été lié');
-    } catch (MissingAuthorizationCodeException $e) {
-      // Do nothing
+            $user->setDiscordId($discordUser->getId());
+            $em->flush();
+            $this->addFlash('success', 'Votre compte discord a bien été lié');
+        } catch (MissingAuthorizationCodeException $e) {
+          // Do nothing
+        }
+
+        return $this->redirectToRoute('user_edit');
     }
-
-    return $this->redirectToRoute('user_edit');
-  }
 }

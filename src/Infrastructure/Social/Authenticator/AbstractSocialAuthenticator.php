@@ -25,107 +25,106 @@ use Symfony\Component\Security\Http\Util\TargetPathTrait;
 
 abstract class AbstractSocialAuthenticator extends SocialAuthenticator
 {
-  use TargetPathTrait;
+    use TargetPathTrait;
 
-  protected string $serviceName = '';
-  protected EntityManagerInterface $em;
-  private ClientRegistry $clientRegistry;
-  private RouterInterface $router;
-  private AuthService $authService;
+    protected string $serviceName = '';
+    protected EntityManagerInterface $em;
+    private ClientRegistry $clientRegistry;
+    private RouterInterface $router;
+    private AuthService $authService;
 
-  public function __construct(
-    ClientRegistry $clientRegistry,
-    EntityManagerInterface $em,
-    RouterInterface $router,
-    AuthService $authService
-  )
-  {
-    $this->clientRegistry = $clientRegistry;
-    $this->em = $em;
-    $this->router = $router;
-    $this->authService = $authService;
-  }
-
-  public function supports(Request $request): bool
-  {
-    if ('' === $this->serviceName) {
-      throw new \Exception("You must set a \$serviceName property (for instance 'github', 'facebook')");
+    public function __construct(
+        ClientRegistry $clientRegistry,
+        EntityManagerInterface $em,
+        RouterInterface $router,
+        AuthService $authService
+    ) {
+        $this->clientRegistry = $clientRegistry;
+        $this->em = $em;
+        $this->router = $router;
+        $this->authService = $authService;
     }
 
-    return 'oauth_check' === $request->attributes->get('_route') && $request->get('service') === $this->serviceName;
-  }
+    public function supports(Request $request): bool
+    {
+        if ('' === $this->serviceName) {
+            throw new \Exception("You must set a \$serviceName property (for instance 'github', 'facebook')");
+        }
 
-  public function start(Request $request, AuthenticationException $authException = null): RedirectResponse
-  {
-    return new RedirectResponse($this->router->generate('auth_login'));
-  }
+        return 'oauth_check' === $request->attributes->get('_route') && $request->get('service') === $this->serviceName;
+    }
 
-  public function getCredentials(Request $request): AccessTokenInterface
-  {
-    return $this->fetchAccessToken($this->getClient());
-  }
+    public function start(Request $request, AuthenticationException $authException = null): RedirectResponse
+    {
+        return new RedirectResponse($this->router->generate('auth_login'));
+    }
 
-  protected function getClient(): OAuth2Client
-  {
-    /** @var OAuth2Client $client */
-    $client = $this->clientRegistry->getClient($this->serviceName);
+    public function getCredentials(Request $request): AccessTokenInterface
+    {
+        return $this->fetchAccessToken($this->getClient());
+    }
 
-    return $client;
-  }
+    protected function getClient(): OAuth2Client
+    {
+      /** @var OAuth2Client $client */
+        $client = $this->clientRegistry->getClient($this->serviceName);
+
+        return $client;
+    }
 
   /**
    * @param AccessToken $credentials
    */
-  public function getUser($credentials, UserProviderInterface $userProvider): ?User
-  {
-    $resourceOwner = $this->getResourceOwnerFromCredentials($credentials);
-    $user = $this->authService->getUserOrNull();
-    if ($user) {
-      throw new UserAuthenticatedException($user, $resourceOwner);
-    }
-    /** @var UserRepository $repository */
-    $repository = $this->em->getRepository(User::class);
-    $user = $this->getUserFromResourceOwner($resourceOwner, $repository);
-    if (null === $user) {
-      throw new UserOauthNotFoundException($resourceOwner);
-    }
+    public function getUser($credentials, UserProviderInterface $userProvider): ?User
+    {
+        $resourceOwner = $this->getResourceOwnerFromCredentials($credentials);
+        $user = $this->authService->getUserOrNull();
+        if ($user) {
+            throw new UserAuthenticatedException($user, $resourceOwner);
+        }
+      /** @var UserRepository $repository */
+        $repository = $this->em->getRepository(User::class);
+        $user = $this->getUserFromResourceOwner($resourceOwner, $repository);
+        if (null === $user) {
+            throw new UserOauthNotFoundException($resourceOwner);
+        }
 
-    return $user;
-  }
-
-  protected function getResourceOwnerFromCredentials(AccessToken $credentials): ResourceOwnerInterface
-  {
-    return $this->getClient()->fetchUserFromToken($credentials);
-  }
-
-  protected function getUserFromResourceOwner(ResourceOwnerInterface $resourceOwner, UserRepository $repository): ?User
-  {
-    return null;
-  }
-
-  public function onAuthenticationFailure(Request $request, AuthenticationException $exception): RedirectResponse
-  {
-    if ($exception instanceof UserOauthNotFoundException) {
-      return new RedirectResponse($this->router->generate('register', ['oauth' => 1]));
+        return $user;
     }
 
-    if ($exception instanceof UserAuthenticatedException) {
-      return new RedirectResponse($this->router->generate('user_edit'));
+    protected function getResourceOwnerFromCredentials(AccessToken $credentials): ResourceOwnerInterface
+    {
+        return $this->getClient()->fetchUserFromToken($credentials);
     }
 
-    if ($request->hasSession()) {
-      $request->getSession()->set(Security::AUTHENTICATION_ERROR, $exception);
+    protected function getUserFromResourceOwner(ResourceOwnerInterface $resourceOwner, UserRepository $repository): ?User
+    {
+        return null;
     }
 
-    return new RedirectResponse($this->router->generate('auth_login'));
-  }
+    public function onAuthenticationFailure(Request $request, AuthenticationException $exception): RedirectResponse
+    {
+        if ($exception instanceof UserOauthNotFoundException) {
+            return new RedirectResponse($this->router->generate('register', ['oauth' => 1]));
+        }
 
-  public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $providerKey): RedirectResponse
-  {
-    if ($targetPath = $this->getTargetPath($request->getSession(), $providerKey)) {
-      return new RedirectResponse($targetPath);
+        if ($exception instanceof UserAuthenticatedException) {
+            return new RedirectResponse($this->router->generate('user_edit'));
+        }
+
+        if ($request->hasSession()) {
+            $request->getSession()->set(Security::AUTHENTICATION_ERROR, $exception);
+        }
+
+        return new RedirectResponse($this->router->generate('auth_login'));
     }
 
-    return new RedirectResponse($this->router->generate('home'));
-  }
+    public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $providerKey): RedirectResponse
+    {
+        if ($targetPath = $this->getTargetPath($request->getSession(), $providerKey)) {
+            return new RedirectResponse($targetPath);
+        }
+
+        return new RedirectResponse($this->router->generate('home'));
+    }
 }

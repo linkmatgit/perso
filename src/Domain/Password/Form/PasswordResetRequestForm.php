@@ -14,23 +14,23 @@ class PasswordResetRequestForm extends AbstractType
    * @param FormBuilderInterface<FormBuilderInterface> $builder
    * @param array<string,mixed> $options
    */
-  public function buildForm(FormBuilderInterface $builder, array $options): void
-  {
-    $builder
-      ->add('email', EmailType::class, [
+    public function buildForm(FormBuilderInterface $builder, array $options): void
+    {
+        $builder
+        ->add('email', EmailType::class, [
         'required' => true,
-      ]);
-  }
+        ]);
+    }
 
-  public function configureOptions(OptionsResolver $resolver): void
-  {
-    $resolver->setDefaults([
-      'data_class' => PasswordResetRequestData::class,
-    ]);
-  }
+    public function configureOptions(OptionsResolver $resolver): void
+    {
+        $resolver->setDefaults([
+        'data_class' => PasswordResetRequestData::class,
+        ]);
+    }
 
-  public function getBlockPrefix(): string
-  {
-    return '';
-  }
+    public function getBlockPrefix(): string
+    {
+        return '';
+    }
 }

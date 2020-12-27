@@ -11,24 +11,24 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class ContentRepository extends AbstractRepository
 {
-  public const limit = 5;
+    public const limit = 5;
 
-  public function __construct(ManagerRegistry $registry)
-  {
-    parent::__construct($registry, Content::class);
-  }
+    public function __construct(ManagerRegistry $registry)
+    {
+        parent::__construct($registry, Content::class);
+    }
 
 
   /**
    * @param int $limit
    * @return Content[]
    */
-  public function findLatest(int $limit = self::limit): array
-  {
-    return $this->createQueryBuilder('c')
-      ->orderBy('c.createdAt', 'DESC')
-      ->setMaxResults($limit)
-      ->getQuery()
-      ->getResult();
-  }
+    public function findLatest(int $limit = self::limit): array
+    {
+        return $this->createQueryBuilder('c')
+        ->orderBy('c.createdAt', 'DESC')
+        ->setMaxResults($limit)
+        ->getQuery()
+        ->getResult();
+    }
 }

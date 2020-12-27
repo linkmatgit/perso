@@ -6,15 +6,15 @@ use App\Domain\Application\Entity\Content;
 
 class ContentCreatedEvent
 {
-  private Content $content;
+    private Content $content;
 
-  public function __construct(Content $content)
-  {
-    $this->content = $content;
-  }
+    public function __construct(Content $content)
+    {
+        $this->content = $content;
+    }
 
-  public function getContent(): Content
-  {
-    return $this->content;
-  }
+    public function getContent(): Content
+    {
+        return $this->content;
+    }
 }

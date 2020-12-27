@@ -7,20 +7,20 @@ use App\Domain\Password\Entity\PasswordResetToken;
 
 final class PasswordResetTokenCreatedEvent
 {
-  private PasswordResetToken $token;
+    private PasswordResetToken $token;
 
-  public function __construct(PasswordResetToken $token)
-  {
-    $this->token = $token;
-  }
+    public function __construct(PasswordResetToken $token)
+    {
+        $this->token = $token;
+    }
 
-  public function getUser(): User
-  {
-    return $this->token->getUser();
-  }
+    public function getUser(): User
+    {
+        return $this->token->getUser();
+    }
 
-  public function getToken(): PasswordResetToken
-  {
-    return $this->token;
-  }
+    public function getToken(): PasswordResetToken
+    {
+        return $this->token;
+    }
 }

@@ -10,15 +10,15 @@ use Symfony\Component\Security\Core\Exception\AuthenticationException;
  */
 class UserOauthNotFoundException extends AuthenticationException
 {
-  private ResourceOwnerInterface $resourceOwner;
+    private ResourceOwnerInterface $resourceOwner;
 
-  public function __construct(ResourceOwnerInterface $resourceOwner)
-  {
-    $this->resourceOwner = $resourceOwner;
-  }
+    public function __construct(ResourceOwnerInterface $resourceOwner)
+    {
+        $this->resourceOwner = $resourceOwner;
+    }
 
-  public function getResourceOwner(): ResourceOwnerInterface
-  {
-    return $this->resourceOwner;
-  }
+    public function getResourceOwner(): ResourceOwnerInterface
+    {
+        return $this->resourceOwner;
+    }
 }

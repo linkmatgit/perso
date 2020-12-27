@@ -10,34 +10,33 @@ use Symfony\Component\HttpFoundation\RequestStack;
  */
 class KnpPaginator implements PaginatorInterface
 {
-  private \Knp\Component\Pager\PaginatorInterface $paginator;
-  private RequestStack $requestStack;
-  private array $sortableFields = [];
+    private \Knp\Component\Pager\PaginatorInterface $paginator;
+    private RequestStack $requestStack;
+    private array $sortableFields = [];
 
-  public function __construct(
-    \Knp\Component\Pager\PaginatorInterface $paginator,
-    RequestStack $requestStack
-  )
-  {
-    $this->paginator = $paginator;
-    $this->requestStack = $requestStack;
-  }
+    public function __construct(
+        \Knp\Component\Pager\PaginatorInterface $paginator,
+        RequestStack $requestStack
+    ) {
+        $this->paginator = $paginator;
+        $this->requestStack = $requestStack;
+    }
 
-  public function paginate(Query $query): \Traversable
-  {
-    $request = $this->requestStack->getCurrentRequest();
-    $page = $request ? $request->query->getInt('page', 1) : 1;
+    public function paginate(Query $query): \Traversable
+    {
+        $request = $this->requestStack->getCurrentRequest();
+        $page = $request ? $request->query->getInt('page', 1) : 1;
 
-    return $this->paginator->paginate($query, $page, $query->getMaxResults() ?: 15, [
-      'sortFieldWhitelist' => $this->sortableFields,
-      'filterFieldWhitelist' => [],
-    ]);
-  }
+        return $this->paginator->paginate($query, $page, $query->getMaxResults() ?: 15, [
+        'sortFieldWhitelist' => $this->sortableFields,
+        'filterFieldWhitelist' => [],
+        ]);
+    }
 
-  public function allowSort(string ...$fields): self
-  {
-    $this->sortableFields = array_merge($this->sortableFields, $fields);
+    public function allowSort(string ...$fields): self
+    {
+        $this->sortableFields = array_merge($this->sortableFields, $fields);
 
-    return $this;
-  }
+        return $this;
+    }
 }
