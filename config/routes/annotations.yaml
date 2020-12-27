@@ -1,0 +1,12 @@
+controllers:
+  resource: ../../src/Http/Controller/
+  type: annotation
+controllers_admin:
+  name_prefix: admin_
+  prefix: '%admin_prefix%'
+  resource: ../../src/Http/Admin/Controller/
+  type: annotation
+
+kernel:
+  resource: ../../src/Kernel.php
+  type: annotation
