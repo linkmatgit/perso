@@ -3,7 +3,9 @@
 namespace App\Domain\Blog\Entity;
 
 use App\Domain\Auth\User;
-use App\Repository\Domain\Blog\Entity\CategoryRepository;
+use App\Domain\Blog\Repository\CategoryRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -32,12 +34,32 @@ class Category
      * @ORM\Column(type="string", length=255)
      */
     private string $color = "#000000";
+  /**
+   * @ORM\Column(type="string", length=255)
+   */
+    private string $slug = '';
 
+  /**
+   * @ORM\Column(type="integer", options={"unsigned": true})
+   */
+    private int $postsCount = 0;
+
+  /**
+   * @ORM\OneToMany(targetEntity="App\Domain\Blog\Entity\Post", mappedBy="category")
+   *
+   * @var Collection<int,Post>
+   */
+    private Collection $posts;
+
+    public function __construct()
+    {
+        $this->posts = new ArrayCollection();
+    }
     /**
      * @ORM\ManyToOne(targetEntity=User::class)
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=true)
      */
-    private User $author;
+    private ?User $author = null;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
@@ -95,7 +117,7 @@ class Category
         return $this->author;
     }
 
-    public function setAuthor(User $author): self
+    public function setAuthor(?User $author): self
     {
         $this->author = $author;
 
@@ -129,6 +151,49 @@ class Category
     public function setUpdatedAt(?\DateTimeInterface $updatedAt): Category
     {
         $this->updatedAt = $updatedAt;
+        return $this;
+    }
+
+    public function getPostsCount(): int
+    {
+        return $this->postsCount;
+    }
+
+    public function setPostsCount(int $postsCount): Category
+    {
+        $this->postsCount = $postsCount;
+
+        return $this;
+    }
+
+  /**
+   * @return Collection<int,Post>|Post[]
+   */
+    public function getPosts(): Collection
+    {
+        return $this->posts;
+    }
+
+    public function addPost(Post $post): self
+    {
+        if (!$this->posts->contains($post)) {
+            $this->posts[] = $post;
+            $post->setCategory($this);
+        }
+
+        return $this;
+    }
+
+    public function removePost(Post $post): self
+    {
+        if ($this->posts->contains($post)) {
+            $this->posts->removeElement($post);
+          // set the owning side to null (unless already changed)
+            if ($post->getCategory() === $this) {
+                $post->setCategory(null);
+            }
+        }
+
         return $this;
     }
 }

@@ -7,6 +7,7 @@ use App\Domain\Blog\Entity\Post;
 use App\Domain\Blog\Event\PostCreatedEvent;
 use App\Domain\Blog\Event\PostDeletedEvent;
 use App\Domain\Blog\Event\PostUpdatedEvent;
+use App\Http\Admin\Data\PostCrudData;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -41,5 +42,16 @@ final class PostController extends CrudController
         ->createQueryBuilder('row')
         ->orderby('row.createdAt', 'DESC');
         return $this->crudIndex($query);
+    }
+  /**
+   * @return Response
+   * @Route("/new", name="new", methods={"POST", "GET"})
+   */
+    public function new():Response
+    {
+      /** @var Post $entity */
+        $entity = (new Post())->setAuthor($this->getUser());
+        $data = new PostCrudData($entity);
+        return $this->crudNew($data);
     }
 }

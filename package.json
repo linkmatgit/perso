@@ -22,6 +22,7 @@
     "@types/youtube": "^0.0.38",
     "babel-plugin-jsx-pragmatic": "^1.0.2",
     "eslint-config-preact": "^1.1.1",
+    "htm": "^3.0.4",
     "jest": "^25.1.0",
     "prettier": "^2.0.5",
     "prettier-standard": "^16.4.1",
@@ -39,6 +40,29 @@
     "choices.js": "^7.1.5",
     "flatpickr": "^4.6.9",
     "preact": "^10.5.7",
-    "turbolinks": "^5.2.0"
+    "turbolinks": "^5.2.0",
+    "codemirror": "^5.52.0"
+  },
+  "eslintConfig": {
+    "extends": "preact",
+    "rules": {
+      "react/jsx-fragments": 0,
+      "import/no-absolute-path": 0
+    },
+    "env": {
+      "browser": true
+    }
+  },
+  "jest": {
+    "moduleNameMapper": {
+      "/functions/(.*)$": "<rootDir>/../../assets/functions/$1",
+      "/elements/(.*)$": "<rootDir>/../../assets/elements/$1"
+    },
+    "moduleDirectories": [
+      "node_modules",
+      "bower_components",
+      "assets"
+    ],
+    "rootDir": "tests/js"
   }
 }

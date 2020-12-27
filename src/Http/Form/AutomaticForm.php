@@ -2,6 +2,11 @@
 
 namespace App\Http\Form;
 
+use App\Core\Type\DateTimeType;
+use App\Core\Type\EditorType;
+use App\Core\Type\SwitchType;
+use App\Domain\Auth\User;
+use DateTimeInterface;
 use ReflectionClass;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ColorType;
@@ -19,14 +24,19 @@ class AutomaticForm extends AbstractType
     'string' => TextType::class,
     'int' => NumberType::class,
     'float' => NumberType::class,
+    'bool' => SwitchType::class,
+    DateTimeInterface::class => DateTimeType::class,
+    User::class => TextType::class,
+
     ];
 
     const NAMES = [
 
-    'description' => TextareaType::class,
+    'description' => EditorType::class,
     'short' => TextareaType::class,
     'color' => ColorType::class,
     'links' => TextareaType::class,
+    'content' => EditorType::class
     ];
 
     public function buildForm(FormBuilderInterface $builder, array $options): void

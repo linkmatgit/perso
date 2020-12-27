@@ -16,8 +16,8 @@ class PostCrudData implements CrudDataInterface
     public ?string $title = null;
     public ?string $slug = null;
     public ?string $content = null;
-    public Category $category;
-    public bool $online = false;
+    //public ?Category $category = null;
+    public ?bool $online = false;
     public ?\DateTimeInterface $createdAt;
     public User $author;
     private EntityManagerInterface $em;
@@ -28,7 +28,7 @@ class PostCrudData implements CrudDataInterface
         $this->entity = $item;
         $this->title = $item->getTitle();
         $this->slug = $item->getSlug();
-        $this->category = $item->getCategory();
+        //$this->category = $item->getCategory();
         $this->online = $item->getOnline();
         $this->createdAt = $item->getCreatedAt();
         $this->author = $item->getAuthor();
@@ -51,7 +51,7 @@ class PostCrudData implements CrudDataInterface
         $this->entity->setSlug($this->slug);
         $this->entity->setOnline($this->online);
         $this->entity->setCreatedAt($this->createdAt);
-        $this->entity->setCategory($this->category);
+        //$this->entity->setCategory($this->category);
     }
 
     public function setEntityManager(EntityManagerInterface $em): self

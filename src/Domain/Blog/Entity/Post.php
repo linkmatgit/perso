@@ -12,11 +12,11 @@ use Doctrine\ORM\Mapping as ORM;
  */
 final class Post extends Content
 {
-    /**
-     * @ORM\ManyToOne(targetEntity=Category::class)
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private Category $category;
+  /**
+   * @ORM\ManyToOne(targetEntity="App\Domain\Blog\Entity\Category", inversedBy="posts")
+   * @ORM\JoinColumn(onDelete="SET NULL")
+   */
+    private ?Category $category = null;
 
 
     public function getCategory(): ?Category
@@ -24,7 +24,7 @@ final class Post extends Content
         return $this->category;
     }
 
-    public function setCategory(Category $category): self
+    public function setCategory(?Category $category): self
     {
         $this->category = $category;
 

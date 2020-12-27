@@ -2,6 +2,10 @@
 
 
 {% block body %}
-
-Bienvenue {{ user.username }}
+Bienvenue
+  {% if app.user is not null %}
+    {{ user.username }}
+  {%  else %}
+    visiteur
+  {% endif %}
 {% endblock %}

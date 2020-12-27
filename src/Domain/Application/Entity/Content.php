@@ -54,7 +54,7 @@ abstract class Content
   /**
    * @ORM\Column(type="boolean", options={"default": 0})
    */
-    private bool $online;
+    private bool $online = true;
 
     public function getId(): ?int
     {
