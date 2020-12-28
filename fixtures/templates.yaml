@@ -1,0 +1,19 @@
+App\Domain\Blog\Entity\Post:
+  post (template):
+    title: <sentence(5, true)>
+    content: <text(1500)>
+    created_at: <dateTimeThisYear()>
+    updated_at: <dateTimeThisYear()>
+    online: true
+    author: '@user1'
+App\Domain\Auth\User:
+  user (template):
+    username: John<current()>
+    email: john<current()>\@doe.fr
+    password: <password('0000')>
+    createdAt: <dateTimeThisYear()>
+App\Domain\Blog\Entity\Category:
+  category (template):
+    name: <sentence(5, true)>
+    created_at: <dateTimeThisYear()>
+    updated_at: <dateTimeThisYear()>

@@ -51,6 +51,8 @@ class Category
    */
     private Collection $posts;
 
+
+
     public function __construct()
     {
         $this->posts = new ArrayCollection();
@@ -165,7 +167,23 @@ class Category
 
         return $this;
     }
+  /**
+   * @return string
+   */
+  public function getSlug(): string
+  {
+    return $this->slug;
+  }
 
+  /**
+   * @param string $slug
+   * @return Category
+   */
+  public function setSlug(string $slug): Category
+  {
+    $this->slug = $slug;
+    return $this;
+  }
   /**
    * @return Collection<int,Post>|Post[]
    */
