@@ -22,7 +22,7 @@ final class PostController extends CrudController
     protected string $templatePath = 'blog';
     protected string $menuItem = 'blog';
     protected string $entity = Post::class;
-    protected string $routePrefix = 'admin_post';
+    protected string $routePrefix = 'admin_blog';
     protected array $events = [
     'update' => PostUpdatedEvent::class,
     'delete' => PostDeletedEvent::class,
@@ -40,7 +40,7 @@ final class PostController extends CrudController
         $this->paginator->allowSort('row.id', 'row.online');
         $query = $this->getRepository()
         ->createQueryBuilder('row')
-        ->orderby('row.createdAt', 'DESC');
+        ->orderby('row.id', 'DESC');
         return $this->crudIndex($query);
     }
   /**
@@ -49,9 +49,30 @@ final class PostController extends CrudController
    */
     public function new():Response
     {
-      /** @var Post $entity */
-        $entity = (new Post())->setAuthor($this->getUser());
+        $entity = (new Post())->setAuthor($this->getUser())->setCreatedAt(new \DateTime());
         $data = new PostCrudData($entity);
         return $this->crudNew($data);
     }
+
+  /**
+   * @Route("/{id<\d+>}", name="edit", methods={"POST", "GET"})
+   * @param Request $request
+   * @param Post $post
+   * @return Response
+   */
+    public function edit(Request $request, Post $post ): Response {
+      $data = (new PostCrudData($post));
+      return $this->crudEdit($data);
+
+    }
+
+  /**
+   * @param Post $post
+   * @return Response
+   * @Route ("/{id<\d+>}", methods={"DELETE"}, name="delete")
+   */
+  public function delete(Post $post): Response
+  {
+    return $this->crudDelete($post);
+  }
 }

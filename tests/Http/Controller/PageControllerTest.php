@@ -15,4 +15,6 @@ class PageControllerTest extends WebTestCase
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
         $this->expectTitle($title);
     }
+
+
 }

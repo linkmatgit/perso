@@ -1,6 +1,6 @@
 import flatpickr from 'flatpickr'
 import 'flatpickr/dist/flatpickr.min.css'
-import '/css/libs/flatpickr.scss'
+//import 'css/libs/flatpickr.scss'
 
 /**
  * @property {flatpickr} flatpickr

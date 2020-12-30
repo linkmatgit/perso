@@ -136,7 +136,7 @@ abstract class CrudController extends BaseController
             }
             $this->addFlash('success', 'Le contenu a bien été créé');
 
-            return $this->redirectToRoute($this->routePrefix . '_edit', ['id' => $entity->getId()]);
+            return $this->redirectToRoute($this->routePrefix . '_index');
         }
 
         return $this->render("admin/{$this->templatePath}/new.html.twig", [
@@ -148,9 +148,11 @@ abstract class CrudController extends BaseController
 
     public function crudDelete(object $entity, ?string $redirectRoute = null): RedirectResponse
     {
+
         $this->em->remove($entity);
         if ($this->events['delete'] ?? null) {
             $this->dispatcher->dispatch(new $this->events['delete']($entity));
+
         }
         $this->em->flush();
         $this->addFlash('success', 'Le contenu a bien été supprimé');

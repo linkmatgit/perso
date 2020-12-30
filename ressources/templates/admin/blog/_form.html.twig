@@ -10,7 +10,9 @@
       {{ form_row(form.title) }}
       {{ form_row(form.slug) }}
       {{ form_row(form.createdAt) }}
-        {{ form_row(form.online) }}
+      {{ form_row(form.online) }}
+      {{ form_row(form.category) }}
+      {{ form_row(form.author) }}
     </div>
   </section>
 
@@ -28,4 +30,4 @@
 
 </section>
 
-
+{{ form_end(form) }}

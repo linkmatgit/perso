@@ -26,21 +26,18 @@ abstract class Content
 
   /**
    * @ORM\Column(type="string", length=255)
-   *@Assert\NotBlank()
+
    */
     private string $title = "";
 
   /**
    * @ORM\Column(type="string", length=255)
-   * @Assert\NotBlank()
-     * @Assert\Regex(pattern ="/^[a-z0-9-]+$/")
    */
     private string $slug = "";
 
   /**
    * @ORM\Column(type="text")
    * @Assert\Length(min=3, minMessage="Le Contenue est trop Court")
-
    */
     private ?string $content = " ";
 

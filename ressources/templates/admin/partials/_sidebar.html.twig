@@ -2,7 +2,10 @@
   <aside class="dashboard-sidebar">
     <div class="dashboard-sidebar__wrapper">
       <ul class="dashboard-sidebar__main">
-        <li><a href="#" >Dashboard</a></li>
+        <li><a href="{{ path('admin_dashboard') }}" >Dashboard</a></li>
+        <li class="title">Communauté</li>
+        <li><a href="{{ path('admin_blog_index') }}" {{ menu_active('blog') }}>{{ icon('pen') }} Blog</a>
+        </li>
       </ul>
     </div>
   </aside>

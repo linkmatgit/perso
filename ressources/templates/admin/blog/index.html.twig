@@ -5,14 +5,14 @@
 {% endblock %}
 
 {% block actions %}
-  <a href="#" class="btn-primary">Ajouter un article</a>
+  <a href="{{ path('admin_blog_new') }}" class="btn-primary">Ajouter un article</a>
 {% endblock %}
 
 {% block content %}
   <table class="table">
     <thead>
     <tr>
-      <th>ID</th>
+      <th>{{ sort_by(rows, 'ID', 'row.id') }}</th>
       <th>Nom</th>
       <th class="text-center">Statut</th>
       <th class="text-right">Actions</th>
@@ -20,23 +20,22 @@
     </thead>
     <tbody>
     {% for row in rows %}
-      {#  set link = path('admin_blog_edit', {id: row.id})#}
+        {% set link = path('admin_blog_edit', {id: row.id}) %}
       <tr>
         <td class="dashboard-id">
-          <a href="#">{{ row.id }}</a>
+          <a href="{{ link }}">{{ row.id }}</a>
         </td>
         <td>
-          <a href="#">{{ row.title }}</a>
+          <a href="{{ link }}">{{ row.title }}</a>
         </td>
         <td><span class="bullet {% if row.online == false %}bullet--danger{% endif %}"></span></td>
         <td>
           <div class="dashboard-actions">
-            {#  <a href="{{ link }}">{{ icon('edit') }}</a> #}
-            <form action="" method="post" onsubmit="return confirm('Voulez vous vraiment supprimer ce contenu')">
+            <a href="{{ link }}">{{ icon('edit') }}</a>
+            <form action="{{ path('admin_blog_edit', {id: row.id}) }}" method="post" onsubmit="return confirm('Voulez vous vraiment supprimer ce contenu')">
               <input type="hidden" name="_method" value="DELETE" />
               <button type="submit">
-
-                {#  {{ icon('delete') }}#}
+                {{ icon('delete') }}
               </button>
             </form>
           </div>

@@ -1,7 +1,7 @@
-import { ApiError, HTTP_UNPROCESSABLE_ENTITY, jsonFetch } from 'functions/api.js'
-import { strToDom } from 'functions/dom.js'
-import { isAuthenticated } from 'functions/auth.js'
-import { onNotification } from 'api/notifications.js'
+import { ApiError, HTTP_UNPROCESSABLE_ENTITY, jsonFetch } from '/functions/api.js'
+import { strToDom } from '/functions/dom.js'
+import { isAuthenticated } from '/functions/auth.js'
+import { onNotification } from '/api/notifications.js'
 
 const konamicode = [
   'ArrowUp',

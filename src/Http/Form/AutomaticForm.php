@@ -6,6 +6,9 @@ use App\Core\Type\DateTimeType;
 use App\Core\Type\EditorType;
 use App\Core\Type\SwitchType;
 use App\Domain\Auth\User;
+use App\Domain\Blog\Entity\Category;
+use App\Http\Admin\Form\Field\CategoryFormType;
+use App\Http\Admin\Form\Field\UserChoiceType;
 use DateTimeInterface;
 use ReflectionClass;
 use Symfony\Component\Form\AbstractType;
@@ -21,22 +24,22 @@ use Symfony\Component\Form\FormBuilderInterface;
 class AutomaticForm extends AbstractType
 {
     const TYPES = [
-    'string' => TextType::class,
-    'int' => NumberType::class,
-    'float' => NumberType::class,
-    'bool' => SwitchType::class,
-    DateTimeInterface::class => DateTimeType::class,
-    User::class => TextType::class,
+      'string' => TextType::class,
+      'int' => NumberType::class,
+      'float' => NumberType::class,
+      'bool' => SwitchType::class,
+      DateTimeInterface::class => DateTimeType::class,
+      User::class => UserChoiceType::class,
+      Category::class => CategoryFormType::class
 
     ];
 
     const NAMES = [
-
-    'description' => EditorType::class,
-    'short' => TextareaType::class,
-    'color' => ColorType::class,
-    'links' => TextareaType::class,
-    'content' => EditorType::class
+      'description' => EditorType::class,
+      'short' => TextareaType::class,
+      'color' => ColorType::class,
+      'links' => TextareaType::class,
+      'content' => EditorType::class
     ];
 
     public function buildForm(FormBuilderInterface $builder, array $options): void

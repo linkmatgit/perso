@@ -15,9 +15,10 @@
 
 
     <div class="dashboard-card stack-large">
-      {% block content '' %} gg
+      {% block content '' %}
     </div>
 
   </div>
+  {{ knp_pagination_render(rows) }}
 
 {% endblock %}

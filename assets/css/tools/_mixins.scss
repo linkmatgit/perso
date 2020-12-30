@@ -8,14 +8,12 @@
     @content;
   }
 }
-
 @mixin down($size) {
   $size: strip-unit($size);
   @media (max-width: $size * 1px) {
     @content;
   }
 }
-
 @mixin between($down, $up) {
   $down: strip-unit($down);
   $up: strip-unit($up);
@@ -81,6 +79,29 @@
           $weight
       );
       @include font-face($name, $path + '-' + $suffix, $weight, $style, $exts);
+    }
+  }
+}
+
+@mixin dark () {
+  @if (&) {
+    @media (prefers-color-scheme: dark) {
+      body:not([class~='theme-light']) & {
+        @content;
+      }
+    }
+    .theme-dark &{
+      @content;
+    }
+  } @else {
+
+    @media (prefers-color-scheme: dark) {
+      body:not([class~='theme-light']) {
+        @content;
+      }
+    }
+    .theme-dark {
+      @content;
     }
   }
 }

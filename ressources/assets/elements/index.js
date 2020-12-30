@@ -1,4 +1,0 @@
-
-
-import './forum/index.js'
-

@@ -2,7 +2,7 @@
 const prefresh = require("@prefresh/vite");
 const path = require("path");
 
-const root = "./ressources/assets";
+const root = "./assets";
 
 /**
  * @type { import('vite').UserConfig }
