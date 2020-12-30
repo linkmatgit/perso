@@ -1,0 +1,23 @@
+<div class="dashboard-page">
+  <aside class="dashboard-sidebar">
+    <div class="dashboard-sidebar__wrapper">
+      <ul class="dashboard-sidebar__main">
+        <li><a href="#" >Dashboard</a></li>
+      </ul>
+    </div>
+  </aside>
+  <aside class="dashboard-topbar">
+    <div class="dashboard-topbar__search">
+      {% if searchable is defined and searchable %}
+        <form>
+          <input name="q" type="text" placeholder="Rechercher" value="{{ app.request.get('q') }}">
+        </form>
+      {% endif %}
+    </div>
+    <ul class="dashboard-topbar__nav">
+
+      <li class="header__logout"><a href="/">Logout</a></li>
+    </ul>
+  </aside>
+
+</div>

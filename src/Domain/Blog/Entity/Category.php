@@ -170,20 +170,20 @@ class Category
   /**
    * @return string
    */
-  public function getSlug(): string
-  {
-    return $this->slug;
-  }
+    public function getSlug(): string
+    {
+        return $this->slug;
+    }
 
   /**
    * @param string $slug
    * @return Category
    */
-  public function setSlug(string $slug): Category
-  {
-    $this->slug = $slug;
-    return $this;
-  }
+    public function setSlug(string $slug): Category
+    {
+        $this->slug = $slug;
+        return $this;
+    }
   /**
    * @return Collection<int,Post>|Post[]
    */

@@ -5,6 +5,7 @@ namespace App\Domain\Application\Entity;
 use App\Domain\Auth\User;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity
@@ -25,14 +26,21 @@ abstract class Content
 
   /**
    * @ORM\Column(type="string", length=255)
+   *@Assert\NotBlank()
    */
     private string $title = "";
+
   /**
    * @ORM\Column(type="string", length=255)
+   * @Assert\NotBlank()
+     * @Assert\Regex(pattern ="/^[a-z0-9-]+$/")
    */
     private string $slug = "";
+
   /**
    * @ORM\Column(type="text")
+   * @Assert\Length(min=3, minMessage="Le Contenue est trop Court")
+
    */
     private ?string $content = " ";
 

@@ -1,9 +1,49 @@
-{% extends 'admin/base.html.twig' %}
+{% extends 'admin/layout/card.html.twig' %}
 
-{% block body %}
- {% for row in rows %}
-    {{ row.title }}
-    {{ row.category.name }}
-    {{ row.author.username }}
-  {% endfor %}
+{% block title %}
+  Gestion des articles
+{% endblock %}
+
+{% block actions %}
+  <a href="#" class="btn-primary">Ajouter un article</a>
+{% endblock %}
+
+{% block content %}
+  <table class="table">
+    <thead>
+    <tr>
+      <th>ID</th>
+      <th>Nom</th>
+      <th class="text-center">Statut</th>
+      <th class="text-right">Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for row in rows %}
+      {#  set link = path('admin_blog_edit', {id: row.id})#}
+      <tr>
+        <td class="dashboard-id">
+          <a href="#">{{ row.id }}</a>
+        </td>
+        <td>
+          <a href="#">{{ row.title }}</a>
+        </td>
+        <td><span class="bullet {% if row.online == false %}bullet--danger{% endif %}"></span></td>
+        <td>
+          <div class="dashboard-actions">
+            {#  <a href="{{ link }}">{{ icon('edit') }}</a> #}
+            <form action="" method="post" onsubmit="return confirm('Voulez vous vraiment supprimer ce contenu')">
+              <input type="hidden" name="_method" value="DELETE" />
+              <button type="submit">
+
+                {#  {{ icon('delete') }}#}
+              </button>
+            </form>
+          </div>
+        </td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+
 {% endblock %}

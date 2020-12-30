@@ -17,9 +17,9 @@ class PostCrudData implements CrudDataInterface
     public ?string $slug = null;
     public ?string $content = null;
     //public ?Category $category = null;
-    public ?bool $online = false;
+    public bool $online = false;
     public ?\DateTimeInterface $createdAt;
-    public User $author;
+    public ?User $author;
     private EntityManagerInterface $em;
 
 
@@ -29,7 +29,7 @@ class PostCrudData implements CrudDataInterface
         $this->title = $item->getTitle();
         $this->slug = $item->getSlug();
         //$this->category = $item->getCategory();
-        $this->online = $item->getOnline();
+        $this->online = (bool) $item->getOnline();
         $this->createdAt = $item->getCreatedAt();
         $this->author = $item->getAuthor();
     }

@@ -1,0 +1,10 @@
+
+@import 'tools/functions';
+@import 'tools/mixins';
+
+@import "modules/admin/dashboard";
+
+
+body.admin::after {
+  display: none;
+}
