@@ -73,6 +73,11 @@ class Category
      */
     private ?\DateTimeInterface $updatedAt = null;
 
+  /**
+   * @ORM\Column(type="boolean", options={"default": 0})
+   */
+    private bool $online = true;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -211,6 +216,17 @@ class Category
                 $post->setCategory(null);
             }
         }
+
+        return $this;
+    }
+    public function getOnline(): ?bool
+    {
+        return $this->online;
+    }
+
+    public function setOnline(bool $online): self
+    {
+        $this->online = $online;
 
         return $this;
     }

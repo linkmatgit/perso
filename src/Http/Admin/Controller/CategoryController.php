@@ -3,30 +3,28 @@
 
 namespace App\Http\Admin\Controller;
 
+use App\Domain\Blog\Entity\Category;
 use App\Domain\Blog\Entity\Post;
-use App\Domain\Blog\Event\PostCreatedEvent;
-use App\Domain\Blog\Event\PostDeletedEvent;
-use App\Domain\Blog\Event\PostUpdatedEvent;
-use App\Http\Admin\Data\PostCrudData;
+use App\Http\Admin\Data\CategoryCrudData;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/blog", name="blog_")
+ * @Route("/category", name="category_")
  *
- * @method getRepository() App\Domain\Blog\Repository\PostRepository
+ * @method getRepository() App\Domain\Blog\Repository\CategoryRepository
  */
-final class PostController extends CrudController
+final class CategoryController extends CrudController
 {
-    protected string $templatePath = 'blog';
-    protected string $menuItem = 'blog';
-    protected string $entity = Post::class;
-    protected string $routePrefix = 'admin_blog';
+    protected string $templatePath = 'category';
+    protected string $menuItem = 'category';
+    protected string $entity = Category::class;
+    protected string $routePrefix = 'admin_category';
     protected array $events = [
-    'update' => PostUpdatedEvent::class,
-    'delete' => PostDeletedEvent::class,
-    'create' => PostCreatedEvent::class,
+    'update' => null,
+    'delete' => null,
+    'create' => null,
     ];
 
 
@@ -49,29 +47,29 @@ final class PostController extends CrudController
    */
     public function new():Response
     {
-        $entity = (new Post())->setAuthor($this->getUser())->setCreatedAt(new \DateTime());
-        $data = new PostCrudData($entity);
+        $entity = (new Category())->setAuthor($this->getUser())->setCreatedAt(new \DateTime());
+        $data = new CategoryCrudData($entity);
         return $this->crudNew($data);
     }
 
   /**
    * @Route("/{id<\d+>}", name="edit", methods={"POST", "GET"})
    * @param Request $request
-   * @param Post $post
+   * @param Category $post
    * @return Response
    */
-    public function edit(Request $request, Post $post): Response
+    public function edit(Request $request, Category $post): Response
     {
-        $data = (new PostCrudData($post));
+        $data = (new CategoryCrudData($post));
         return $this->crudEdit($data);
     }
 
   /**
-   * @param Post $post
+   * @param Category $post
    * @return Response
    * @Route ("/{id<\d+>}", methods={"DELETE"}, name="delete")
    */
-    public function delete(Post $post): Response
+    public function delete(Category $post): Response
     {
         return $this->crudDelete($post);
     }

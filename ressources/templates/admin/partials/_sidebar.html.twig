@@ -6,6 +6,8 @@
         <li class="title">Communauté</li>
         <li><a href="{{ path('admin_blog_index') }}" {{ menu_active('blog') }}>{{ icon('pen') }} Blog</a>
         </li>
+        <li><a href="{{ path('admin_category_index') }}" {{ menu_active('category') }}>{{ icon('pen') }} Category</a>
+        </li>
       </ul>
     </div>
   </aside>
@@ -13,7 +15,7 @@
     <div class="dashboard-topbar__search">
       {% if searchable is defined and searchable %}
         <form>
-          <input name="q" type="text" placeholder="Rechercher" value="{{ app.request.get('q') }}">
+          <input name="q" type="text" placeholder="Rechercher" value="{{ app.request.get('q') }}" >
         </form>
       {% endif %}
     </div>

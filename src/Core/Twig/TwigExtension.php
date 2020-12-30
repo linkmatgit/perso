@@ -7,13 +7,13 @@ use Twig\TwigFunction;
 
 class TwigExtension extends AbstractExtension
 {
-  public function getFunctions(): array
-  {
-    return [
-      new TwigFunction('icon', [$this, 'svgIcon'], ['is_safe' => ['html']]),
-      new TwigFunction('menu_active', [$this, 'menuActive'], ['is_safe' => ['html'], 'needs_context' => true]),
-    ];
-  }
+    public function getFunctions(): array
+    {
+        return [
+        new TwigFunction('icon', [$this, 'svgIcon'], ['is_safe' => ['html']]),
+        new TwigFunction('menu_active', [$this, 'menuActive'], ['is_safe' => ['html'], 'needs_context' => true]),
+        ];
+    }
 
   /**
    * Génère le code HTML pour une icone SVG.
@@ -21,19 +21,19 @@ class TwigExtension extends AbstractExtension
    * @param int|null $size
    * @return string
    */
-  public function svgIcon(string $name, ?int $size = null): string
-  {
-    $attrs = '';
-    if ($size) {
-      $attrs = " width=\"{$size}px\" height=\"{$size}px\"";
-    }
+    public function svgIcon(string $name, ?int $size = null): string
+    {
+        $attrs = '';
+        if ($size) {
+            $attrs = " width=\"{$size}px\" height=\"{$size}px\"";
+        }
 
-    return <<<HTML
+        return <<<HTML
         <svg class="icon icon-{$name}"$attrs>
           <use xlink:href="/sprite.svg#{$name}"></use>
         </svg>
         HTML;
-  }
+    }
 
   /**
    * Ajout une class is-active pour les éléments actifs du menu.
@@ -42,12 +42,12 @@ class TwigExtension extends AbstractExtension
    * @param string $name
    * @return string
    */
-  public function menuActive(array $context, string $name): string
-  {
-    if (($context['menu'] ?? null) === $name) {
-      return ' aria-current="page"';
-    }
+    public function menuActive(array $context, string $name): string
+    {
+        if (($context['menu'] ?? null) === $name) {
+            return ' aria-current="page"';
+        }
 
-    return '';
-  }
+        return '';
+    }
 }

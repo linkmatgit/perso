@@ -10,14 +10,14 @@ use Symfony\Component\Validator\Constraints\RegexValidator;
  */
 class Slug extends Regex
 {
-  public function __construct($options = [])
-  {
-    $options['pattern'] = '/^([a-z0-9A-Z]+\-)*[a-z0-9A-Z]+$/';
-    parent::__construct($options);
-  }
+    public function __construct($options = [])
+    {
+        $options['pattern'] = '/^([a-z0-9A-Z]+\-)*[a-z0-9A-Z]+$/';
+        parent::__construct($options);
+    }
 
-  public function validatedBy(): string
-  {
-    return RegexValidator::class;
-  }
+    public function validatedBy(): string
+    {
+        return RegexValidator::class;
+    }
 }

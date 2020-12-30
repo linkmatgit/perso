@@ -26,8 +26,7 @@ class PostCrudData extends AutomaticCrudData
 
     public function hydrate(): void
     {
-      parent::hydrate();
-      $this->entity->setUpdatedAt(new \DateTime());
+        parent::hydrate();
+        $this->entity->setUpdatedAt(new \DateTime());
     }
-
 }

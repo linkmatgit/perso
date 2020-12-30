@@ -152,7 +152,6 @@ abstract class CrudController extends BaseController
         $this->em->remove($entity);
         if ($this->events['delete'] ?? null) {
             $this->dispatcher->dispatch(new $this->events['delete']($entity));
-
         }
         $this->em->flush();
         $this->addFlash('success', 'Le contenu a bien été supprimé');
