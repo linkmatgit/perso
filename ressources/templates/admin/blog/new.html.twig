@@ -1,5 +1,10 @@
 {% extends('admin/base.html.twig') %}
 
+{% block title %}
+  {{ icon('pen') }}
+  Editer l'article
+{% endblock %}
+
 {% block body %}
   {% include 'admin/blog/_form.html.twig' %}
 {% endblock %}

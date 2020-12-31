@@ -23,5 +23,11 @@
 </main>
 
 </div>
+<script>
+  window.linkmat = {
+    ADMIN: {{ is_granted('ROLE_ADMIN') ? 'true' : 'false' }},
+    USER: {{ app.user ? app.user.id : 'null' }}
+  }
+</script>
 </body>
 </html>

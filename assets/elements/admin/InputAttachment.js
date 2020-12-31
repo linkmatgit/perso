@@ -1,7 +1,7 @@
-import { Alert } from '../Alert.js'
 import SpinningDots from '@grafikart/spinning-dots-element'
-import FileManager from '/elements/admin/filemanager/index.js'
+import FileManager from '/elements/admin/filemanager/index'
 import { ModalDialog } from '@sb-elements/all'
+import { Alert } from '/components/Alert'
 
 /**
  * @property {number|null} timer

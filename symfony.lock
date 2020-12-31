@@ -1,4 +1,21 @@
 {
+    "api-platform/api-pack": {
+        "version": "v1.3.0"
+    },
+    "api-platform/core": {
+        "version": "2.5",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "2.5",
+            "ref": "a93061567140e386f107be75340ac2aee3f86cbf"
+        },
+        "files": [
+            "config/packages/api_platform.yaml",
+            "config/routes/api_platform.yaml",
+            "src/Entity/.gitignore"
+        ]
+    },
     "clue/stdio-react": {
         "version": "v2.4.0"
     },
@@ -117,11 +134,17 @@
     "egulias/email-validator": {
         "version": "2.1.24"
     },
+    "erusev/parsedown": {
+        "version": "1.7.4"
+    },
     "evenement/evenement": {
         "version": "v3.0.1"
     },
     "fakerphp/faker": {
         "version": "v1.13.0"
+    },
+    "fig/link-util": {
+        "version": "1.1.1"
     },
     "friendsofphp/proxy-manager-lts": {
         "version": "v1.0.0"
@@ -655,6 +678,9 @@
     "symfony/property-info": {
         "version": "v5.2.1"
     },
+    "symfony/proxy-manager-bridge": {
+        "version": "v5.2.1"
+    },
     "symfony/routing": {
         "version": "5.1",
         "recipe": {
@@ -833,6 +859,9 @@
     },
     "webmozart/assert": {
         "version": "1.9.1"
+    },
+    "willdurand/negotiation": {
+        "version": "3.0.0"
     },
     "wohali/oauth2-discord-new": {
         "version": "1.1.0"
