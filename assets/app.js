@@ -1,6 +1,7 @@
 import './css/app.scss'
 import Turbolinks from 'turbolinks';
 
+import "./modules/highlight"
 import "./elements"
 import { Switch } from '/elements/Switch'
 import { MarkdownEditor } from '/elements/editor'

@@ -1,0 +1,14 @@
+.blog__single__title{
+  font-size: 30px;
+}
+.blog-single{
+  @extend %container-narrow;
+}
+.blog-single__meta{
+  font-size: 16px;
+  color: var(--color-light);
+  margin-top: space(1);
+}
+.blog-single__body {
+  margin-top: space(3);
+}

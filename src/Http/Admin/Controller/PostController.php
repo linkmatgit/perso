@@ -7,6 +7,7 @@ use App\Domain\Blog\Entity\Post;
 use App\Domain\Blog\Event\PostCreatedEvent;
 use App\Domain\Blog\Event\PostDeletedEvent;
 use App\Domain\Blog\Event\PostUpdatedEvent;
+use App\Domain\Blog\Helpers\BlogCloner;
 use App\Http\Admin\Data\PostCrudData;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -75,4 +76,16 @@ final class PostController extends CrudController
     {
         return $this->crudDelete($post);
     }
+
+      /**
+       * @param Post $post
+       * @return Response
+      * @Route ("/{id<\d+>}", methods={"DELETE"}, name="delete")
+       */
+      public function clone(Post $post): Response
+     {
+       $post = BlogCloner::clone($post);
+      $data = new PostCrudData($post);
+      return $this->crudNew($data);
+      }
 }

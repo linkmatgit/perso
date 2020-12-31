@@ -2,6 +2,7 @@ App\Domain\Blog\Entity\Post:
   post (template):
     title: <sentence(5, true)>
     content: <text(1500)>
+    slug: <slug()>
     created_at: <dateTimeThisYear()>
     updated_at: <dateTimeThisYear()>
     online: true
@@ -15,5 +16,7 @@ App\Domain\Auth\User:
 App\Domain\Blog\Entity\Category:
   category (template):
     name: <sentence(5, true)>
+    slug: <slug()>
     created_at: <dateTimeThisYear()>
     updated_at: <dateTimeThisYear()>
+    author: '@user1'

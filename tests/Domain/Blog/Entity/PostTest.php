@@ -16,7 +16,7 @@ class PostTest extends KernelTestCase
     use FixturesTrait;
 
 
-  public function getUser()
+    public function getUser()
     {
         return (new User())->setUsername('linkmat');
     }
@@ -30,6 +30,4 @@ class PostTest extends KernelTestCase
         ->setCreatedAt(new \DateTime())
         ->setOnline(true);
     }
-
-
 }

@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <title>{% block title %}LinkmatDotCom!{% endblock %}</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimal-ui"/>
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:500,600,700|Roboto:300,400&display=swap" rel="stylesheet">
   <meta name="turbolinks-cache-control" content="no-cache"/>
   {% block stylesheets %}
     {{ encore_entry_link_tags('app') }}
@@ -13,6 +14,27 @@
   {% endblock %}
 </head>
 <body>
+<header class="header">
+  <ul class="navigation">
+    <li><a href="{{ path('app_home') }}">{{ icon('home') }} Home</a></li>
+    <li><a href="{{ path('blog_index') }}">{{ icon('pen') }} Blog</a></li>
+    <li><a href="{{ path('app_home') }}">{{ icon('video') }} Tutoriel</a></li>
+    <li><a href="{{ path('app_home') }}">{{ icon('lines') }} Forum</a></li>
+    <li><a href="{{ path('app_home') }}">{{ icon('comments') }} Forum</a></li>
+  </ul>
+  <ul class="header-side">
+    {% if app.user %}
+    <li><a href="{{ path('user_profil') }}">{{ icon('user') }}{{ app.user.username }}</a></li>
+      <li class="header__logout"><a href="{{ path('auth_logout') }}">{{ icon('logout') }} <span>Se déconnecter</span></a></li>
+      {% else %}
+        <li>
+          <a href="{{ path('register') }}">{{ icon('user') }} <span>S'inscrire</span></a>
+          <span class="text-muted">·</span>
+          <a href="{{ path('auth_login', {redirect: app.request.pathInfo}) }}"><span>Se connecter</span></a>
+        </li>
+    {% endif %}
+  </ul>
+</header>
 <div class="page-wrapper">
 {% block body %}{% endblock %}
 </div>

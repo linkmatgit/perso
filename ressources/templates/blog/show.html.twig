@@ -1,0 +1,28 @@
+{% extends('base.html.twig') %}
+
+{% block title post.title %}
+
+{% block body %}
+
+  {% cache ['single', post] %}
+    <div class="blog-single py5">
+
+      <div class="blog-single__header">
+        <h1 class="blog__single__title">{{ post.title }}</h1>
+        <div class="blog-single__meta">
+          Posté le {{ post.createdAt | date }} -
+          <a href="{{ path('blog_category', {slug: post.category.slug})}}">{{post.category.name}}</a> -
+          Par {{ post.author.username }} -
+        </div>
+      </div>
+
+      <div class="blog-single__body formatted">
+        {{ post.content | markdown }}
+      </div>
+
+      {# include 'partials/comments.html.twig' with {target: post} only #}
+    </div>
+  {% endcache %}
+
+{% endblock %}
+

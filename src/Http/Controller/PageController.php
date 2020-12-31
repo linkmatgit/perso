@@ -12,7 +12,7 @@ class PageController extends AbstractController
 
   /**
    * @return Response
-   * @Route("/",  name="home")
+   * @Route("/",  name="app_home")
    */
     public function home(): Response
     {

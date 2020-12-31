@@ -1,0 +1,25 @@
+.header {
+  display: flex;
+  background: var(--color);
+  color: var(--background-light);
+}
+.navigation{
+  display: flex;
+  @extend %container;
+  font-size: 1.1rem;
+  margin-top: space(2);
+  margin-bottom: space(2);
+}
+.navigation li {
+  padding-left: space(4);
+
+
+}
+.header ul li a svg{
+    width: 16px;
+    height: 16px;
+    margin-right: space(1);
+}
+.header-side{
+ display: flex;
+}

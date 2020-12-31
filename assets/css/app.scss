@@ -15,10 +15,13 @@
   --background: #f7fafb;
   --background-light: #fff;
   --shadow: #d8e1e8;
+
 }
 
+
+
 body{
- // font-family: $font;
+  font-family: var(--font);
   font-size: 16px;
   color: var(--color);
   line-height: 1.6;
@@ -30,13 +33,12 @@ body{
 
 // Outils
 // ==================
-@import 'tools/reset';
-@import 'tools/functions';
 @import 'tools/mixins';
+@import 'tools/functions';
+@import 'tools/reset';
 @import 'tools/layout';
-@import 'tools/typography';
 @import 'tools/animations';
-
+@import 'tools/typography';
 
 @import 'modules/form';
 @import "modules/table";
@@ -46,7 +48,8 @@ body{
 @import "modules/pagination";
 @import "modules/list";
 @import "modules/alert";
-
-
-
+@import "modules/header";
+@import "modules/formatted";
+@import "modules/highlight";
 @import "page/auth";
+@import "page/blog";

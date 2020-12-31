@@ -3,7 +3,10 @@
 namespace App\Domain\Blog\Repository;
 
 use App\Core\Orm\AbstractRepository;
+use App\Domain\Blog\Entity\Category;
 use App\Domain\Blog\Entity\Post;
+
+use Doctrine\ORM\Query;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -19,32 +22,19 @@ class PostRepository extends AbstractRepository
         parent::__construct($registry, Post::class);
     }
 
-    // /**
-    //  * @return Post[] Returns an array of Post objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('p')
-            ->andWhere('p.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('p.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
+  public function queryAll(?Category $category = null): Query
+  {
+    $query = $this->createQueryBuilder('p')
+      ->select('p')
+      ->where('p.online = true')
+      ->orderBy('p.createdAt', 'DESC');
 
-    /*
-    public function findOneBySomeField($value): ?Post
-    {
-        return $this->createQueryBuilder('p')
-            ->andWhere('p.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+    if ($category) {
+      $query = $query
+        ->andWhere('p.category = :category')
+        ->setParameter('category', $category);
     }
-    */
+
+    return $query->getQuery();
+  }
 }
