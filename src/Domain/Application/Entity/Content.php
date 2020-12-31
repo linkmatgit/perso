@@ -2,6 +2,7 @@
 
 namespace App\Domain\Application\Entity;
 
+use App\Core\Validator\Slug;
 use App\Domain\Attachment\Attachment;
 use App\Domain\Auth\User;
 use Doctrine\ORM\Mapping as ORM;
@@ -13,6 +14,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\DiscriminatorColumn(name="type", type="string")
  * @ORM\DiscriminatorMap({
  *     "post" = "App\Domain\Blog\Entity\Post",
+ *     "course" = "App\Domain\Course\Entity\Course",
  * })
  */
 abstract class Content
@@ -26,12 +28,13 @@ abstract class Content
 
   /**
    * @ORM\Column(type="string", length=255)
-
+   * @Assert\NotBlank()
    */
     private string $title = "";
 
   /**
    * @ORM\Column(type="string", length=255)
+   * @Slug()
    */
     private string $slug = "";
 
