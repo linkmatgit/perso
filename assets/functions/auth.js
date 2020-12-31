@@ -4,7 +4,7 @@
  * @return {boolean}
  */
 export function isAdmin () {
-  return window.grafikart.ADMIN === true
+  return window.linkmat.ADMIN === true
 }
 
 /**
@@ -13,7 +13,7 @@ export function isAdmin () {
  * @return {boolean}
  */
 export function isAuthenticated () {
-  return window.grafikart.USER !== null
+  return window.linkmat.USER !== null
 }
 
 /**
@@ -22,7 +22,7 @@ export function isAuthenticated () {
  * @return {boolean}
  */
 export function lastNotificationRead () {
-  return window.grafikart.NOTIFICATION
+  return window.linkmat.NOTIFICATION
 }
 
 /**
@@ -31,7 +31,7 @@ export function lastNotificationRead () {
  * @return {number|null}
  */
 export function getUserId () {
-  return window.grafikart.USER
+  return window.linkmat.USER
 }
 
 /**
@@ -47,5 +47,5 @@ export function canManage (userId) {
   if (!userId) {
     return false
   }
-  return window.grafikart.USER === parseInt(userId, 10)
+  return window.linkmat.USER === parseInt(userId, 10)
 }

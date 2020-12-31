@@ -2,8 +2,8 @@
 
 namespace App\Domain\Application\Entity;
 
+use App\Domain\Attachment\Attachment;
 use App\Domain\Auth\User;
-
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -40,6 +40,13 @@ abstract class Content
    * @Assert\Length(min=3, minMessage="Le Contenue est trop Court")
    */
     private ?string $content = " ";
+
+  /**
+   * @ORM\ManyToOne(targetEntity="App\Domain\Attachment\Attachment", cascade={"persist"})
+   * @ORM\JoinColumn(name="attachment_id", referencedColumnName="id")
+   */
+    private ?Attachment $image = null;
+
 
   /**
    * @ORM\Column(type="datetime", nullable=true)
@@ -152,6 +159,21 @@ abstract class Content
     public function setOnline(bool $online): self
     {
         $this->online = $online;
+
+        return $this;
+    }
+    public function getImage(): ?Attachment
+    {
+        return $this->image;
+    }
+
+  /**
+   * @param Attachment|null $image
+   * @return $this
+   */
+    public function setImage(?Attachment $image): self
+    {
+        $this->image = $image;
 
         return $this;
     }

@@ -1,11 +1,11 @@
-import { classNames } from '/functions/dom.js'
+import { classNames } from '/functions/dom'
 import { useRef, useState } from 'preact/hooks'
 import { Loader } from '/components/Loader.jsx'
-import { useAsyncEffect } from '/functions/hooks.js'
-import { jsonFetch } from '/functions/api.js'
-import { human } from '/functions/size.js'
+import { useAsyncEffect } from '/functions/hooks'
+import { jsonFetch } from '/functions/api'
+import { human } from '/functions/size'
 import { pathsToTree } from './helpers'
-import { objToSearchParams } from '/functions/url.js'
+import { objToSearchParams } from '/functions/url'
 
 /**
  * Fichier (retour d'api)
@@ -65,7 +65,13 @@ export function FileManager ({ dragOver, apiEndpoint, onSelectFile }) {
           <label htmlFor='file-search' className='bloc__title'>
             Rechercher
           </label>
-          <input type='search' placeholder='e.g. image.png' id='file-search' name='q' ref={searchInput} />
+          <input
+            type='search'
+            placeholder='e.g. image.png'
+            id='file-search'
+            name='q'
+            ref={searchInput}
+          />
         </form>
         <hr />
         <div className='bloc'>
@@ -77,7 +83,12 @@ export function FileManager ({ dragOver, apiEndpoint, onSelectFile }) {
               </div>
             ) : (
               folders.map(folder => (
-                <Folder key={folder} folder={folder} currentFolder={currentFolder} onSelect={handleSelectFolder} />
+                <Folder
+                  key={folder}
+                  folder={folder}
+                  currentFolder={currentFolder}
+                  onSelect={handleSelectFolder}
+                />
               ))
             )}
           </div>
@@ -100,7 +111,12 @@ export function FileManager ({ dragOver, apiEndpoint, onSelectFile }) {
             </thead>
             <tbody>
               {files.map(file => (
-                <File key={file} file={file} onDelete={handleDelete} onSelect={onSelectFile} />
+                <File
+                  key={file}
+                  file={file}
+                  onDelete={handleDelete}
+                  onSelect={onSelectFile}
+                />
               ))}
             </tbody>
           </table>
@@ -125,7 +141,11 @@ function File ({ file, onSelect, onDelete }) {
       <td>{human(file.size)}</td>
       <td>
         <button class='delete' onClick={() => onDelete(file)}>
-          <svg fill='none' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'>
+          <svg
+            fill='none'
+            xmlns='http://www.w3.org/2000/svg'
+            viewBox='0 0 16 16'
+          >
             <path
               fillRule='evenodd'
               clipRule='evenodd'
@@ -155,7 +175,12 @@ function Folder ({ folder, onSelect, currentFolder }) {
         )}
         onClick={() => onSelect(folder)}
       >
-        <svg fill='none' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 9 10' class='arrow'>
+        <svg
+          fill='none'
+          xmlns='http://www.w3.org/2000/svg'
+          viewBox='0 0 9 10'
+          class='arrow'
+        >
           <path
             d='M1.196.073A.47.47 0 00.737.048.414.414 0 00.5.417v9.166c0 .155.092.297.238.369a.459.459 0 00.458-.025l7.111-4.584A.41.41 0 008.5 5a.41.41 0 00-.193-.343L1.196.073z'
             fill='currentColor'
@@ -176,7 +201,12 @@ function Folder ({ folder, onSelect, currentFolder }) {
       </div>
       {isSelected &&
         folder.children.map(child => (
-          <Folder key={folder} folder={child} onSelect={onSelect} currentFolder={currentFolder} />
+          <Folder
+            key={folder}
+            folder={child}
+            onSelect={onSelect}
+            currentFolder={currentFolder}
+          />
         ))}
     </>
   )

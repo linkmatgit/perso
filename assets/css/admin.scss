@@ -3,6 +3,8 @@
 @import 'tools/mixins';
 @import "libs/flapickr";
 @import "modules/admin/dashboard";
+@import "modules/attachments";
+
 
 body.admin::after {
   display: none;

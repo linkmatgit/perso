@@ -1,4 +1,4 @@
-import { flash } from '/elements/Alert.js'
+import { flash } from '/elements/Alert'
 
 export const HTTP_UNPROCESSABLE_ENTITY = 422
 export const HTTP_NOT_FOUND = 404
@@ -88,7 +88,9 @@ export class ApiError {
 
   // Récupère la liste de violation pour un champs donnée
   violationsFor (field) {
-    return this.data.violations.filter(v => v.propertyPath === field).map(v => v.message)
+    return this.data.violations
+      .filter(v => v.propertyPath === field)
+      .map(v => v.message)
   }
 
   get name () {

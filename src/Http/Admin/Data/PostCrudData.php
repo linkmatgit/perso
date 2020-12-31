@@ -2,6 +2,7 @@
 
 namespace App\Http\Admin\Data;
 
+use App\Domain\Attachment\Attachment;
 use App\Domain\Auth\User;
 use App\Domain\Blog\Entity\Category;
 use App\Domain\Blog\Entity\Post;
@@ -20,7 +21,7 @@ class PostCrudData extends AutomaticCrudData
     public ?\DateTimeInterface $createdAt;
     public ?User $author;
     private EntityManagerInterface $em;
-
+    public ?Attachment $image = null;
 
 
 

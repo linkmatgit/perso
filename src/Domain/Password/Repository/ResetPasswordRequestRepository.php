@@ -3,6 +3,7 @@
 namespace App\Domain\Password\Repository;
 
 use App\Core\Orm\AbstractRepository;
+use App\Domain\Auth\User;
 use App\Domain\Password\ResetPasswordRequest;
 
 use Doctrine\Persistence\ManagerRegistry;

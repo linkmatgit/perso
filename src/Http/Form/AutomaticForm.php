@@ -5,6 +5,8 @@ namespace App\Http\Form;
 use App\Core\Type\DateTimeType;
 use App\Core\Type\EditorType;
 use App\Core\Type\SwitchType;
+use App\Domain\Attachment\Attachment;
+use App\Domain\Attachment\Type\AttachmentType;
 use App\Domain\Auth\User;
 use App\Domain\Blog\Entity\Category;
 use App\Http\Admin\Form\Field\CategoryFormType;
@@ -13,10 +15,12 @@ use DateTimeInterface;
 use ReflectionClass;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ColorType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
  * Génère un formulaire de manière automatique en lisant les propriété d'un objet.
@@ -30,8 +34,9 @@ class AutomaticForm extends AbstractType
       'bool' => SwitchType::class,
       DateTimeInterface::class => DateTimeType::class,
       User::class => UserChoiceType::class,
-      Category::class => CategoryFormType::class
-
+      Category::class => CategoryFormType::class,
+      UploadedFile::class => FileType::class,
+      Attachment::class => AttachmentType::class,
     ];
 
     const NAMES = [
