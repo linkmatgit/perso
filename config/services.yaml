@@ -43,3 +43,7 @@ services:
 
   App\Infrastructure\Image\ImageResizer:
     arguments: ['%image_resize_key%']
+
+  App\Infrastructure\Mercure\Service\CookieGenerator:
+    arguments:
+      $secret: '%env(resolve:MERCURE_SUBSCRIBER_KEY)%'

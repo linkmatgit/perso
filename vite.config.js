@@ -18,7 +18,7 @@ const config = {
   plugins: [prefresh()],
   root,
   configureServer: function ({root, watcher}) {
-    watcher.add(path.resolve(root, "../ressources/templates/**/*.twig"));
+    watcher.add(path.resolve(root, "../templates/**/*.twig"));
     watcher.on("change", function (path) {
       if (path.endsWith(".twig")) {
         watcher.send({

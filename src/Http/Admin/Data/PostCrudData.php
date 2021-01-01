@@ -27,7 +27,7 @@ class PostCrudData extends AutomaticCrudData
     public ?\DateTimeInterface $createdAt;
     public ?User $author;
     private EntityManagerInterface $em;
-    public ?Attachment $image = null;
+    //public ?Attachment $image = null;
 
 
 

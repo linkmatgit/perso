@@ -24,11 +24,10 @@
   <spotlight-bar></spotlight-bar>
 </div>
 
-
 <script>
-  window.linkmat = {
-    ADMIN: {{ is_granted('ROLE_ADMIN') ? 'true' : 'false' }},
-    USER: {{ app.user ? app.user.id : 'null' }}
+  window.grafikart = {...(window.grafikart || {}),
+    ADMIN: {{ is_granted('SUPERADMIN') ? 'true' : 'false' }},
+    USER: {{ app.user ? app.user.id : 'null' }},
   }
 </script>
 </body>
