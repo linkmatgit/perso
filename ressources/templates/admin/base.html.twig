@@ -21,8 +21,10 @@
 <main class="dashboard-body">
   {% block body '' %}
 </main>
-
+  <spotlight-bar></spotlight-bar>
 </div>
+
+
 <script>
   window.linkmat = {
     ADMIN: {{ is_granted('ROLE_ADMIN') ? 'true' : 'false' }},

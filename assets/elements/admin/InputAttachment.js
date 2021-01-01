@@ -1,7 +1,7 @@
 import SpinningDots from '@grafikart/spinning-dots-element'
 import FileManager from '/elements/admin/filemanager/index'
-import { ModalDialog } from '@sb-elements/all'
 import { Alert } from '/components/Alert'
+import {Modal} from "/components/Modal.jsx";
 
 /**
  * @property {number|null} timer
@@ -76,7 +76,7 @@ export default class InputAttachment extends HTMLInputElement {
 
   onClick (e) {
     e.preventDefault()
-    const modal = new ModalDialog()
+    const modal = new Modal()
     modal.setAttribute('overlay-close', 'overlay-close')
     const fm = new FileManager()
     modal.appendChild(fm)

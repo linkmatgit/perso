@@ -12,3 +12,15 @@
 .blog-single__body {
   margin-top: space(3);
 }
+
+.blog-post {
+  @extend %container-narrow;
+}
+.post__title{
+  font-size: 28px;
+}
+.blog-post__meta{
+  font-size: 14px;
+  opacity: 0.8;
+  display: flex;
+}

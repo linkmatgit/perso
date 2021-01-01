@@ -2,7 +2,7 @@
 
 namespace App\Tests\Http\Controller;
 
-use App\Tests\WebTestCase;
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Response;
 
 class PageControllerTest extends WebTestCase
@@ -10,9 +10,9 @@ class PageControllerTest extends WebTestCase
 
     public function testGetHomePage()
     {
+         $client = self::createClient();
         $title = 'LinkmatDotCom!';
-        $this->client->request('GET', '/');
+        $client->request('GET', '/');
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
-        $this->expectTitle($title);
     }
 }

@@ -1,11 +1,11 @@
 import { createContext } from 'preact'
-import { ApiError, jsonFetch } from '/functions/api.js'
+import { ApiError, jsonFetch } from '/functions/api'
 import { useContext, useEffect, useLayoutEffect, useRef, useState } from 'preact/hooks'
-import { useAutofocus } from '/functions/hooks.js'
-import { flash } from '/elements/Alert.js'
+import { useAutofocus } from '/functions/hooks'
+import { flash } from '/elements/Alert'
 import { Button, SecondaryButton, PrimaryButton } from '/components/Button.jsx'
 import { Flex } from '/components/Layout.jsx'
-import { classNames } from '/functions/dom.js'
+import { classNames } from '/functions/dom'
 
 /**
  * Représente un champs, dans le contexte du formulaire

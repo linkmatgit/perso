@@ -6,8 +6,7 @@ namespace App\Tests\Domain\Blog\Entity;
 use App\Domain\Auth\User;
 use App\Domain\Blog\Entity\Post;
 use App\Tests\FixturesTrait;
-use App\Tests\KernelTestCase;
-use Psr\Container\ContainerInterface;
+use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 class PostTest extends KernelTestCase
 {

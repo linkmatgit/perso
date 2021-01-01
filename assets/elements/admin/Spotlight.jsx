@@ -1,8 +1,8 @@
 import { Modal } from '/components/Modal.jsx'
 import { Field } from '/components/Form.jsx'
 import { useEffect, useState } from 'preact/hooks'
-import { classNames } from '/functions/dom.js'
-import { useToggle } from '/functions/hooks.js'
+import { classNames } from '/functions/dom'
+import { useToggle } from '/functions/hooks'
 
 /**
  * Barre permettant un accès rapide à certaines pages de l'administration
@@ -50,7 +50,7 @@ export function Spotlight () {
 
   useEffect(() => {
     setLinks(
-      Array.from(document.querySelectorAll('.header-nav a')).map(a => {
+      Array.from(document.querySelectorAll('.dashboard-sidebar__main a')).map(a => {
         const text = a.innerText.trim()
         return {
           link: a.getAttribute('href'),
