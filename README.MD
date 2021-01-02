@@ -11,3 +11,9 @@ php, javascript, linux, windows
 
 - [1] Make lint
 - [2] make format
+
+
+# MISE EN GARDE
+ Ce site a pour but et simple but de me perfectionner en php, d'apprendre et de
+ comprendre il a aucun interet reel est surement pas a 100 % fiable
+

@@ -10,6 +10,7 @@ class DashboardController extends BaseController
 {
 
 
+
   /**
    * @return Response
    * @Route("/", name="dashboard")
