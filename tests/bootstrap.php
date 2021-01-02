@@ -16,17 +16,17 @@ $application = new Application($kernel);
 $application->setAutoExit(false);
 $databaseDoesNotExists = $application->run(new StringInput('dbal:run-sql "SELECT username FROM user;"'), new NullOutput());
 if ($databaseDoesNotExists) {
-  try {
-    $application->run(new StringInput('doctrine:database:drop --if-exists --force -q'));
-  } catch (Exception $e) {
-  }
-  try {
-    $application->run(new StringInput('doctrine:database:create -q'));
-  } catch (Exception $e) {
-  }
-  try {
-    $application->run(new StringInput('doctrine:schema:update --force -q'));
-  } catch (Exception $e) {
-  }
+    try {
+        $application->run(new StringInput('doctrine:database:drop --if-exists --force -q'));
+    } catch (Exception $e) {
+    }
+    try {
+        $application->run(new StringInput('doctrine:database:create -q'));
+    } catch (Exception $e) {
+    }
+    try {
+        $application->run(new StringInput('doctrine:schema:update --force -q'));
+    } catch (Exception $e) {
+    }
 }
 $kernel->shutdown();

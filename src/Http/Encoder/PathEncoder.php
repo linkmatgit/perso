@@ -18,14 +18,14 @@ use Symfony\Component\Serializer\Encoder\EncoderInterface;
  */
 class PathEncoder implements EncoderInterface
 {
-  const FORMAT = 'path';
+    const FORMAT = 'path';
 
-  private UrlGeneratorInterface $urlGenerator;
+    private UrlGeneratorInterface $urlGenerator;
 
-  public function __construct(UrlGeneratorInterface $urlGenerator)
-  {
-    $this->urlGenerator = $urlGenerator;
-  }
+    public function __construct(UrlGeneratorInterface $urlGenerator)
+    {
+        $this->urlGenerator = $urlGenerator;
+    }
 
   /**
    * @param array $data
@@ -33,21 +33,21 @@ class PathEncoder implements EncoderInterface
    * @param array $context
    * @return string
    */
-  public function encode($data, string $format, array $context = []): string
-  {
-    ['path' => $path, 'params' => $params] = array_merge(['params' => []], $data);
+    public function encode($data, string $format, array $context = []): string
+    {
+        ['path' => $path, 'params' => $params] = array_merge(['params' => []], $data);
 
-    $hash = isset($data['hash']) ? '#'.$data['hash'] : '';
-    $url = $context['url'] ?? false;
+        $hash = isset($data['hash']) ? '#'.$data['hash'] : '';
+        $url = $context['url'] ?? false;
 
-    return $this->urlGenerator->generate($path, $params, $url ? UrlGeneratorInterface::ABSOLUTE_URL : UrlGeneratorInterface::ABSOLUTE_PATH).$hash;
-  }
+        return $this->urlGenerator->generate($path, $params, $url ? UrlGeneratorInterface::ABSOLUTE_URL : UrlGeneratorInterface::ABSOLUTE_PATH).$hash;
+    }
 
   /**
    * {@inheritdoc}
    */
-  public function supportsEncoding(string $format): bool
-  {
-    return self::FORMAT === $format;
-  }
+    public function supportsEncoding(string $format): bool
+    {
+        return self::FORMAT === $format;
+    }
 }

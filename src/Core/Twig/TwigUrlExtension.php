@@ -14,98 +14,98 @@ use Vich\UploaderBundle\Templating\Helper\UploaderHelper;
 
 class TwigUrlExtension extends AbstractExtension
 {
-  private UrlGeneratorInterface $urlGenerator;
-  private SerializerInterface $serializer;
-  private UploaderHelper $uploaderHelper;
+    private UrlGeneratorInterface $urlGenerator;
+    private SerializerInterface $serializer;
+    private UploaderHelper $uploaderHelper;
 
-  public function __construct(
-    UrlGeneratorInterface $urlGenerator,
-    UploaderHelper $uploaderHelper,
-    SerializerInterface $serializer
-  ) {
-    $this->urlGenerator = $urlGenerator;
-    $this->serializer = $serializer;
-    $this->uploaderHelper = $uploaderHelper;
-  }
-
-  public function getFunctions(): array
-  {
-    return [
-      new TwigFunction('content_path', [$this, 'contentPath']),
-      new TwigFunction('path', [$this, 'pathFor']),
-      new TwigFunction('url', [$this, 'urlFor']),
-    ];
-  }
-
-  public function getFilters(): array
-  {
-    return [
-      new TwigFilter('avatar', [$this, 'avatarPath']),
-      new TwigFilter('autolink', [$this, 'autoLink']),
-    ];
-  }
-
-  public function contentPath(Content $content): ?string
-  {
-    if ($content instanceof Post) {
-      return $this->urlGenerator->generate('blog_show', ['slug' => $content->getSlug()]);
+    public function __construct(
+        UrlGeneratorInterface $urlGenerator,
+        UploaderHelper $uploaderHelper,
+        SerializerInterface $serializer
+    ) {
+        $this->urlGenerator = $urlGenerator;
+        $this->serializer = $serializer;
+        $this->uploaderHelper = $uploaderHelper;
     }
 
-    return null;
-  }
-
-  public function avatarPath(User $user): ?string
-  {
-    if (null === $user->getAvatarName()) {
-      return '/images/default.png';
+    public function getFunctions(): array
+    {
+        return [
+        new TwigFunction('content_path', [$this, 'contentPath']),
+        new TwigFunction('path', [$this, 'pathFor']),
+        new TwigFunction('url', [$this, 'urlFor']),
+        ];
     }
 
-    return $this->uploaderHelper->asset($user, 'avatarFile');
-  }
+    public function getFilters(): array
+    {
+        return [
+        new TwigFilter('avatar', [$this, 'avatarPath']),
+        new TwigFilter('autolink', [$this, 'autoLink']),
+        ];
+    }
+
+    public function contentPath(Content $content): ?string
+    {
+        if ($content instanceof Post) {
+            return $this->urlGenerator->generate('blog_show', ['slug' => $content->getSlug()]);
+        }
+
+        return null;
+    }
+
+    public function avatarPath(User $user): ?string
+    {
+        if (null === $user->getAvatarName()) {
+            return '/images/default.png';
+        }
+
+        return $this->uploaderHelper->asset($user, 'avatarFile');
+    }
 
   /**
    * @param string|object $path
    * @param array $params
    * @return string
    */
-  public function pathFor($path, array $params = []): string
-  {
-    if (is_string($path)) {
-      return $this->urlGenerator->generate($path, $params);
-    }
+    public function pathFor($path, array $params = []): string
+    {
+        if (is_string($path)) {
+            return $this->urlGenerator->generate($path, $params);
+        }
 
-    return $this->serializer->serialize($path, 'path', ['url' => false]);
-  }
+        return $this->serializer->serialize($path, 'path', ['url' => false]);
+    }
 
   /**
    * @param string|object $path
    * @param array $params
    * @return string
    */
-  public function urlFor($path, array $params = []): string
-  {
-    if (is_string($path)) {
-      return $this->urlGenerator->generate($path, $params, \Symfony\Component\Routing\Generator\UrlGeneratorInterface::ABSOLUTE_URL);
+    public function urlFor($path, array $params = []): string
+    {
+        if (is_string($path)) {
+            return $this->urlGenerator->generate($path, $params, \Symfony\Component\Routing\Generator\UrlGeneratorInterface::ABSOLUTE_URL);
+        }
+
+        return $this->serializer->serialize($path, 'path', ['url' => true]);
     }
 
-    return $this->serializer->serialize($path, 'path', ['url' => true]);
-  }
+    public function autoLink(string $string): string
+    {
+        $regexp = '/(<a.*?>)?(https?)?(:\/\/)?(\w+\.)?(\w+)\.([\w\/\-_.~&=?]+)(<\/a>)?/i';
+        $anchor = '<a href="%s://%s" target="_blank">%s</a>';
 
-  public function autoLink(string $string): string
-  {
-    $regexp = '/(<a.*?>)?(https?)?(:\/\/)?(\w+\.)?(\w+)\.([\w\/\-_.~&=?]+)(<\/a>)?/i';
-    $anchor = '<a href="%s://%s" target="_blank">%s</a>';
+        preg_match_all($regexp, $string, $matches, PREG_SET_ORDER);
 
-    preg_match_all($regexp, $string, $matches, PREG_SET_ORDER);
+        foreach ($matches as $match) {
+            if (empty($match[1]) && empty($match[7])) {
+                $protocol = $match[2] ? $match[2] : 'http';
+                $replace = sprintf($anchor, $protocol, $match[0], $match[0]);
+                $string = str_replace($match[0], $replace, $string);
+            }
+        }
 
-    foreach ($matches as $match) {
-      if (empty($match[1]) && empty($match[7])) {
-        $protocol = $match[2] ? $match[2] : 'http';
-        $replace = sprintf($anchor, $protocol, $match[0], $match[0]);
-        $string = str_replace($match[0], $replace, $string);
-      }
+        return $string;
     }
-
-    return $string;
-  }
 }

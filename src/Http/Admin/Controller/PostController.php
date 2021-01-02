@@ -82,10 +82,10 @@ final class PostController extends CrudController
        * @return Response
       * @Route ("/{id<\d+>}", methods={"DELETE"}, name="delete")
        */
-      public function clone(Post $post): Response
-     {
-       $post = BlogCloner::clone($post);
-      $data = new PostCrudData($post);
-      return $this->crudNew($data);
-      }
+    public function clone(Post $post): Response
+    {
+        $post = BlogCloner::clone($post);
+        $data = new PostCrudData($post);
+        return $this->crudNew($data);
+    }
 }

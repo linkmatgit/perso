@@ -22,19 +22,19 @@ class PostRepository extends AbstractRepository
         parent::__construct($registry, Post::class);
     }
 
-  public function queryAll(?Category $category = null): Query
-  {
-    $query = $this->createQueryBuilder('p')
-      ->select('p')
-      ->where('p.online = true')
-      ->orderBy('p.createdAt', 'DESC');
+    public function queryAll(?Category $category = null): Query
+    {
+        $query = $this->createQueryBuilder('p')
+        ->select('p')
+        ->where('p.online = true')
+        ->orderBy('p.createdAt', 'DESC');
 
-    if ($category) {
-      $query = $query
-        ->andWhere('p.category = :category')
-        ->setParameter('category', $category);
+        if ($category) {
+            $query = $query
+            ->andWhere('p.category = :category')
+            ->setParameter('category', $category);
+        }
+
+        return $query->getQuery();
     }
-
-    return $query->getQuery();
-  }
 }

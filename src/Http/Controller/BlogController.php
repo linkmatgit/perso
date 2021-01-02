@@ -61,7 +61,7 @@ class BlogController extends AbstractController
    * @param array $params
    * @return Response
    */
-  private function renderListing(string $title, ?Query $query, Request $request, array $params = []): Response
+    private function renderListing(string $title, ?Query $query, Request $request, array $params = []): Response
     {
         $page = $request->query->getInt('page', 1);
         $posts = $this->paginator->paginate(
@@ -92,12 +92,11 @@ class BlogController extends AbstractController
    * @param Request $request
    * @return Response
    */
-  public function category(Category $category, Request $request): Response
-  {
-    $title = $category->getName();
-    $query = $this->service->queryAll($category);
+    public function category(Category $category, Request $request): Response
+    {
+        $title = $category->getName();
+        $query = $this->service->queryAll($category);
 
-    return $this->renderListing($title, $query, $request, ['category' => $category]);
-  }
-
+        return $this->renderListing($title, $query, $request, ['category' => $category]);
+    }
 }

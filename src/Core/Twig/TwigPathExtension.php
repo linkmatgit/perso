@@ -10,53 +10,53 @@ use Vich\UploaderBundle\Templating\Helper\UploaderHelper;
 
 class TwigPathExtension extends AbstractExtension
 {
-  private ImageResizer $imageResizer;
-  private UploaderHelper $helper;
+    private ImageResizer $imageResizer;
+    private UploaderHelper $helper;
 
-  public function __construct(
-    ImageResizer $imageResizer,
-    UploaderHelper $helper
-  ) {
-    $this->imageResizer = $imageResizer;
-    $this->helper = $helper;
-  }
-
-  public function getFunctions(): array
-  {
-    return [
-      new TwigFunction('uploads_path', [$this, 'uploadsPath']),
-      new TwigFunction('image_url', [$this, 'imageUrl']),
-      new TwigFunction('image', [$this, 'imageTag'], ['is_safe' => ['html']]),
-    ];
-  }
-
-  public function uploadsPath(string $path): string
-  {
-    return '/uploads/'.trim($path, '/');
-  }
-
-  public function imageUrl($filename, ?int $width = null, ?int $height = null): ?string
-  {
-     $path = $this->helper->asset($filename);
-
-    if (null === $path) {
-      return null;
+    public function __construct(
+        ImageResizer $imageResizer,
+        UploaderHelper $helper
+    ) {
+        $this->imageResizer = $imageResizer;
+        $this->helper = $helper;
     }
 
-    if ('jpg' !== pathinfo($path, PATHINFO_EXTENSION)) {
-      return $path;
+    public function getFunctions(): array
+    {
+        return [
+        new TwigFunction('uploads_path', [$this, 'uploadsPath']),
+        new TwigFunction('image_url', [$this, 'imageUrl']),
+        new TwigFunction('image', [$this, 'imageTag'], ['is_safe' => ['html']]),
+        ];
     }
 
-    return $this->imageResizer->resize($this->helper->asset($entity), $width, $height);
-  }
-
-  public function imageTag($filename, ?int $width = null, ?int $height = null): ?string
-  {
-    $url = $this->imageUrl($filename, $width, $height);
-    if (null !== $url) {
-      return "<img src=\"{$url}\" width=\"{$width}\" height=\"{$height}\"/>";
+    public function uploadsPath(string $path): string
+    {
+        return '/uploads/'.trim($path, '/');
     }
 
-    return null;
-  }
+    public function imageUrl($filename, ?int $width = null, ?int $height = null): ?string
+    {
+        $path = $this->helper->asset($filename);
+
+        if (null === $path) {
+            return null;
+        }
+
+        if ('jpg' !== pathinfo($path, PATHINFO_EXTENSION)) {
+            return $path;
+        }
+
+        return $this->imageResizer->resize($this->helper->asset($entity), $width, $height);
+    }
+
+    public function imageTag($filename, ?int $width = null, ?int $height = null): ?string
+    {
+        $url = $this->imageUrl($filename, $width, $height);
+        if (null !== $url) {
+            return "<img src=\"{$url}\" width=\"{$width}\" height=\"{$height}\"/>";
+        }
+
+        return null;
+    }
 }

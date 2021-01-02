@@ -13,7 +13,7 @@ class SecurityControllerTest extends WebTestCase
     use FixturesTrait;
     public function testLoginTitle(): void
     {
-      $client = self::createClient();
+        $client = self::createClient();
         $title = 'Se connecter';
         $crawler = $client->request('GET', '/connexion');
         $this->assertEquals($title, $crawler->filter('h1')->text(), $crawler->filter('title')->text());
@@ -22,7 +22,7 @@ class SecurityControllerTest extends WebTestCase
 
     public function testBadPassword(): void
     {
-      $client = self::createClient();
+        $client = self::createClient();
         $crawler = $client->request('GET', '/connexion');
         $form =  $crawler->selectButton('Se connecter')->form();
         $form->setValues([
@@ -36,7 +36,7 @@ class SecurityControllerTest extends WebTestCase
     }
     public function testGoodPasswordWorks(): void
     {
-      $client = self::createClient();
+        $client = self::createClient();
       /** @var array<string,User> $users */
         $users = $this->loadFixtures(['users']);
         $crawler = $client->request('GET', '/connexion');

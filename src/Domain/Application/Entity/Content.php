@@ -64,12 +64,12 @@ abstract class Content
   /**
    * @ORM\Column(type="string", length=255, nullable=true)
    */
-  private ?string $image = null;
+    private ?string $image = null;
 
   /**
    * @Vich\UploadableField(fileNameProperty="image", mapping="content")
    */
-  private ?File $imageFile = null;
+    private ?File $imageFile = null;
   /**
    * @ORM\Column(type="boolean", options={"default": 0})
    */
@@ -85,12 +85,12 @@ abstract class Content
    *
    * @return $this
    */
-  public function setId(?int $id): self
-  {
-    $this->id = $id;
+    public function setId(?int $id): self
+    {
+        $this->id = $id;
 
-    return $this;
-  }
+        return $this;
+    }
     public function getTitle(): ?string
     {
         return $this->title;
@@ -183,35 +183,34 @@ abstract class Content
   /**
    * @return File|null
    */
-  public function getImageFile(): ?File
-  {
-    return $this->imageFile;
-  }
+    public function getImageFile(): ?File
+    {
+        return $this->imageFile;
+    }
 
   /**
    * @param File|null $imageFile
    * @return Content
    */
-  public function setImageFile(?File $imageFile): Content
-  {
-    $this->imageFile = $imageFile;
-    return $this;
-  }
+    public function setImageFile(?File $imageFile): Content
+    {
+        $this->imageFile = $imageFile;
+        return $this;
+    }
   /**
    * @return string|null
    */
-  public function getImage(): ?string
-  {
-    return $this->image;
-  }
+    public function getImage(): ?string
+    {
+        return $this->image;
+    }
   /**
    * @param string|null $image
    * @return Content
    */
-  public function setImage(?string $image): Content
-  {
-    $this->image = $image;
-    return $this;
-  }
-
+    public function setImage(?string $image): Content
+    {
+        $this->image = $image;
+        return $this;
+    }
 }
