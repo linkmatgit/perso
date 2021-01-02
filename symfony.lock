@@ -172,6 +172,9 @@
             "fixtures/.gitignore"
         ]
     },
+    "imagine/imagine": {
+        "version": "1.2.4"
+    },
     "intervention/image": {
         "version": "2.5.1"
     },
@@ -234,6 +237,19 @@
     },
     "league/oauth2-google": {
         "version": "3.0.3"
+    },
+    "liip/imagine-bundle": {
+        "version": "1.8",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "master",
+            "version": "1.8",
+            "ref": "5a5bdc2d0e2533ed6935d5ae562f2b318a8fc1ee"
+        },
+        "files": [
+            "config/packages/liip_imagine.yaml",
+            "config/routes/liip_imagine.yaml"
+        ]
     },
     "monolog/monolog": {
         "version": "2.2.0"
@@ -747,6 +763,9 @@
         "version": "v5.2.1"
     },
     "symfony/string": {
+        "version": "v5.2.1"
+    },
+    "symfony/templating": {
         "version": "v5.2.1"
     },
     "symfony/test-pack": {

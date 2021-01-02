@@ -35,13 +35,9 @@ class TwigPathExtension extends AbstractExtension
     return '/uploads/'.trim($path, '/');
   }
 
-  public function imageUrl(?object $entity, ?int $width = null, ?int $height = null): ?string
+  public function imageUrl($filename, ?int $width = null, ?int $height = null): ?string
   {
-    if (null === $entity || $entity instanceof NonExistingAttachment) {
-      return null;
-    }
-
-    $path = $this->helper->asset($entity);
+     $path = $this->helper->asset($filename);
 
     if (null === $path) {
       return null;
@@ -54,9 +50,9 @@ class TwigPathExtension extends AbstractExtension
     return $this->imageResizer->resize($this->helper->asset($entity), $width, $height);
   }
 
-  public function imageTag(?object $entity, ?int $width = null, ?int $height = null): ?string
+  public function imageTag($filename, ?int $width = null, ?int $height = null): ?string
   {
-    $url = $this->imageUrl($entity, $width, $height);
+    $url = $this->imageUrl($filename, $width, $height);
     if (null !== $url) {
       return "<img src=\"{$url}\" width=\"{$width}\" height=\"{$height}\"/>";
     }

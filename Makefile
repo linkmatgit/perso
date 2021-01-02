@@ -20,6 +20,7 @@ build-docker:
 	$(dc) pull --ignore-pull-failures
 	$(dc) build php
 	$(dc) build node
+	$(dc) build nginx
 
 .PHONY: dev
 dev: vendor/autoload.php node_modules/time ## Lance le serveur de développement
@@ -27,7 +28,7 @@ dev: vendor/autoload.php node_modules/time ## Lance le serveur de développement
 
 .PHONY: clean
 clean: ## Nettoie les containers
-	$(dc) -f docker-compose.yml -f docker-compose.test.yml -f docker-compose.import.yml down --volumes
+	$(dc) -f docker-compose.yml -f docker-compose.test.yml down --volumes
 
 .PHONY: seed
 seed: vendor/autoload.php ## Génère des données dans la base de données (docker-compose up doit être lancé)

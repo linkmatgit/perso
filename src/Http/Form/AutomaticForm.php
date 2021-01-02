@@ -36,7 +36,6 @@ class AutomaticForm extends AbstractType
       User::class => UserChoiceType::class,
       Category::class => CategoryFormType::class,
       UploadedFile::class => FileType::class,
-      Attachment::class => AttachmentType::class,
     ];
 
     const NAMES = [
@@ -44,7 +43,8 @@ class AutomaticForm extends AbstractType
       'short' => TextareaType::class,
       'color' => ColorType::class,
       'links' => TextareaType::class,
-      'content' => EditorType::class
+      'content' => EditorType::class,
+      'image' => FileType::class,
     ];
 
     public function buildForm(FormBuilderInterface $builder, array $options): void

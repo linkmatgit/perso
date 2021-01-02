@@ -7,6 +7,8 @@ use App\Domain\Attachment\Attachment;
 use App\Domain\Auth\User;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * @ORM\Entity
@@ -16,6 +18,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *     "post" = "App\Domain\Blog\Entity\Post",
  *     "course" = "App\Domain\Course\Entity\Course",
  * })
+ *@Vich\Uploadable()
  */
 abstract class Content
 {
@@ -45,13 +48,6 @@ abstract class Content
     private ?string $content = " ";
 
   /**
-   * @ORM\ManyToOne(targetEntity="App\Domain\Attachment\Attachment", cascade={"persist"})
-   * @ORM\JoinColumn(name="attachment_id", referencedColumnName="id")
-   */
-    private ?Attachment $image = null;
-
-
-  /**
    * @ORM\Column(type="datetime", nullable=true)
    */
     private ?\DateTimeInterface $createdAt = null;
@@ -65,7 +61,15 @@ abstract class Content
    * @ORM\ManyToOne(targetEntity=User::class)
    */
     private User $author;
+  /**
+   * @ORM\Column(type="string", length=255, nullable=true)
+   */
+  private ?string $image = null;
 
+  /**
+   * @Vich\UploadableField(fileNameProperty="image", mapping="content")
+   */
+  private ?File $imageFile = null;
   /**
    * @ORM\Column(type="boolean", options={"default": 0})
    */
@@ -176,19 +180,38 @@ abstract class Content
 
         return $this;
     }
-    public function getImage(): ?Attachment
-    {
-        return $this->image;
-    }
+  /**
+   * @return File|null
+   */
+  public function getImageFile(): ?File
+  {
+    return $this->imageFile;
+  }
 
   /**
-   * @param Attachment|null $image
-   * @return $this
+   * @param File|null $imageFile
+   * @return Content
    */
-    public function setImage(?Attachment $image): self
-    {
-        $this->image = $image;
+  public function setImageFile(?File $imageFile): Content
+  {
+    $this->imageFile = $imageFile;
+    return $this;
+  }
+  /**
+   * @return string|null
+   */
+  public function getImage(): ?string
+  {
+    return $this->image;
+  }
+  /**
+   * @param string|null $image
+   * @return Content
+   */
+  public function setImage(?string $image): Content
+  {
+    $this->image = $image;
+    return $this;
+  }
 
-        return $this;
-    }
 }

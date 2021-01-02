@@ -19,6 +19,7 @@
 <div class="dashboard-page">
 {% include 'admin/partials/_sidebar.html.twig' %}
 <main class="dashboard-body">
+  {% include 'partials/flash.html.twig' with {floating: true, duration: 2} %}
   {% block body '' %}
 </main>
   <spotlight-bar></spotlight-bar>

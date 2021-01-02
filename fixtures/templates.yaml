@@ -20,3 +20,8 @@ App\Domain\Blog\Entity\Category:
     created_at: <dateTimeThisYear()>
     updated_at: <dateTimeThisYear()>
     author: '@user1'
+App\Domain\Comment\Comment:
+  category (template):
+    content: <sentence(5, true)>
+    created_at: <dateTimeThisYear()>
+    author: '@user1'

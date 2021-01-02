@@ -24,7 +24,6 @@ class SecurityControllerTest extends WebTestCase
     {
       $client = self::createClient();
         $crawler = $client->request('GET', '/connexion');
-        $this->expectFormErrors(0);
         $form =  $crawler->selectButton('Se connecter')->form();
         $form->setValues([
         'username' => 'john@doe.fr',
@@ -41,7 +40,6 @@ class SecurityControllerTest extends WebTestCase
       /** @var array<string,User> $users */
         $users = $this->loadFixtures(['users']);
         $crawler = $client->request('GET', '/connexion');
-        //$this->expectFormErrors(0);
         $form = $crawler->selectButton('Se connecter')->form();
         $form->setValues([
         'username' => $users['user1']->getEmail(),

@@ -8,6 +8,7 @@ use App\Domain\Auth\User;
 use App\Domain\Blog\Entity\Category;
 use App\Domain\Blog\Entity\Post;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -27,8 +28,7 @@ class PostCrudData extends AutomaticCrudData
     public ?\DateTimeInterface $createdAt;
     public ?User $author;
     private EntityManagerInterface $em;
-    //public ?Attachment $image = null;
-
+    public ?UploadedFile $imageFile = null;
 
 
     public function hydrate(): void
